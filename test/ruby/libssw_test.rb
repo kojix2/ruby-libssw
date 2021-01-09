@@ -2,9 +2,9 @@
 
 require "test_helper"
 
-class Ruby::LibsswTest < Minitest::Test
+class LibsswTest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::Ruby::Libssw::VERSION
+    refute_nil LibSSW::VERSION
   end
 
   def test_it_does_something_useful
