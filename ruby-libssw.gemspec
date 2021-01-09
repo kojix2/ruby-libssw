@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/ruby/libssw/version"
+require_relative "lib/libssw/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "ruby-libssw"
-  spec.version       = SSW::VERSION
+  spec.name          = "libssw"
+  spec.version       = LibSSW::VERSION
   spec.authors       = ["kojix2"]
   spec.email         = ["2xijok@gmail.com"]
 
@@ -16,6 +16,13 @@ Gem::Specification.new do |spec|
 
   spec.files         = Dir["*.{md,txt}", "{lib,exe}/**/*"]
   spec.bindir        = "exe"
-  spec.executables   = 'rbssw'
+  spec.executables   = "rbssw"
   spec.require_paths = ["lib"]
+
+  spec.add_dependency "fiddle", '>=1.0.7'
+
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "minitest"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rubocop"
 end
