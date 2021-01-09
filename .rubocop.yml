@@ -1,2 +1,6 @@
 Layout/LineLength:
   Max: 120
+
+AllCops:
+  Exclude:
+    - lib/libssw/BLOSUM50.rb
