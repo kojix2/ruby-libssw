@@ -1,4 +1,4 @@
-# Libssw
+# ruby-libssw
 
 [libssw](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library) - fast SIMD parallelized implementation of the Smith-Waterman algorithm - for Ruby
 
