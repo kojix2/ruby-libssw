@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'fiddle', '>=1.0.7'
+  spec.add_dependency 'pkg-config'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'minitest'
