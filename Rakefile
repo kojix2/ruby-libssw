@@ -9,8 +9,15 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList['test/**/*_test.rb']
 end
 
-require 'rubocop/rake_task'
+task default: :test
 
-RuboCop::RakeTask.new
-
-task default: %i[test rubocop]
+namespace :libssw do
+  desc "Compile libssw"
+  task :compile do
+    Dir.chdir("Complete-Striped-Smith-Waterman-Library/src") do
+      system "gcc -Wall -O3 -pipe -fPIC -shared -rdynamic -o libssw.so ssw.c ssw.h"
+      FileUtils.mkdir_p("../../vendor")
+      FileUtils.move("libssw.so", "../../vendor/libssw.so") # May not work on Windows or Mac?
+    end
+  end
+end
