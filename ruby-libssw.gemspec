@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.executables   = "rbssw"
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "fiddle", '>=1.0.7'
+  spec.add_dependency "fiddle", ">=1.0.7"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "minitest"

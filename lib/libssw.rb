@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'libssw/version'
+require_relative "libssw/version"
 
 module LibSSW
   class Error < StandardError; end
