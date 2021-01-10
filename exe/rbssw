@@ -198,7 +198,7 @@ Bio::FlatFile.open(opts[:query]) do |query_file|
         res = SSW.ssw_align(
           qProfile, rNum, sRSeq.size, opts[:nopen], opts[:next], nFlag, 0, 0, nMaskLen
         )
-        pp res.cigar
+        p res.to_h
         resRc = nil
         if opts[:bbest] && !opts[:bprotein]
           resRc = SSW.align_one(
