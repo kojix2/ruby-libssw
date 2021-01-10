@@ -29,39 +29,61 @@ module LibSSW
   class Align < FFI::Align
     def cigar
       pt = super
-      return [] if cigar_len == 0
+      return [] if cigar_len.zero?
+
       pt[0, 4 * cigar_len].unpack('L*')
     end
-    
+
     def cigar_len
       cigarLen
+    end
+
+    def to_h
+      h = {}
+      %i[score1
+         score2
+         ref_begin1
+         ref_end1
+         read_begin1
+         read_end1
+         ref_end2
+         cigar
+         cigar_len].each do |k|
+        h[k] = __send__(k)
+      end
+      h
     end
   end
 
   class Profile < FFI::Profile
-    def byte
-      warn "WARNING: __m128i* profile_byte"
-      super
-    end
-
-    def word
-      warn "WARNING: __m128i* profile_word"
-      super
-    end
-
     def read
       pt = super
-      return [] if read_len == 0
-      pt[0, read_len].unpack("c*")
+      return [] if read_len.zero?
+
+      pt[0, read_len].unpack('c*')
     end
 
     def mat
       pt = super
-      pt[0, n*n].unpack("c*")
+      pt[0, n * n].unpack('c*')
     end
 
     def read_len
       readLen
+    end
+
+    def to_h
+      h = {}
+      %i[byte
+         word
+         read
+         mat
+         read_len
+         n
+         bias].each do |k|
+        h[k] = __send__(k)
+      end
+      h
     end
   end
 

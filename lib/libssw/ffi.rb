@@ -39,8 +39,8 @@ module LibSSW
     ]
 
     Profile = struct [
-      'int32_t* byte', # __m128i* profile_byte;	// 0: none
-      'int32_t* word', # __m128i* profile_word;	// 0: none
+      '__m128i* byte', # __m128i* profile_byte;	// 0: none
+      '__m128i* word', # __m128i* profile_word;	// 0: none
       'const int8_t* read',
       'const int8_t* mat',
       'int32_t readLen',
