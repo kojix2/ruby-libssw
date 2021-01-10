@@ -24,8 +24,6 @@ module LibSSW
       end
     end
 
-    BAM_CIGAR_SHIFT = 4
-
     Align = struct [
       'uint16_t score1',
       'uint16_t score2',
