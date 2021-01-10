@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'forwardable'
 require_relative 'libssw/version'
 
 module LibSSW
@@ -30,12 +29,33 @@ module LibSSW
   Align   = FFI::Align
   Profile = FFI::Profile
   class << self
-    extend Forwardable
-    def_delegators 'LibSSW::FFI',
-                   :ssw_init,
-                   :init_destroy,
-                   :ssw_align,
-                   :align_destroy,
-                   :mark_mismatch
+    def ssw_init(read, read_len, mat, n, score_size)
+      ptr = FFI.ssw_init(
+        read.pack('c*'), read_len, mat.flatten.pack('l*'), n, score_size
+      )
+      SSW::Profile.new(ptr)
+    end
+
+    def init_destroy(profile)
+      FFI.init_destroy(profile)
+    end
+
+    def ssw_align(prof, ref, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len)
+      ptr = FFI.ssw_align(
+        prof, ref.pack('c*'), ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
+      )
+      SSW::Align.new(ptr)
+    end
+
+    def align_destroy(align)
+      FFI.align_destroy(align)
+    end
+
+    def mark_mismatch(ref_begin1, read_begin1, read_end1, ref, read, read_len, cigar, cigar_len)
+      warn 'implementation: fiexme: **cigar' # FIXME
+      FFI.mark_mismatch(
+        ref_begin1, read_begin1, read_end1, ref.pack('c*'), read.pack('c*'), read_len, cigar, cigar_len.pack('l*')
+      )
+    end
   end
 end
