@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'forwardable'
 require_relative 'libssw/version'
 
 module LibSSW
@@ -25,4 +26,13 @@ module LibSSW
                  end
 
   autoload :FFI, 'libssw/ffi'
+
+  extend Forwardable
+  Align   = FFI::Align
+  Profile = FFI::Profile
+  def_delegators :FFI,
+                 :ssw_init,
+                 :init_destroy,
+                 :align_destroy,
+                 :mark_mismatch
 end
