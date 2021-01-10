@@ -26,8 +26,41 @@ module LibSSW
 
   require_relative 'libssw/ffi'
 
-  Align   = FFI::Align
-  Profile = FFI::Profile
+  class Align < FFI::Align
+    def cigar
+      pt = super
+      pt[0, 4 * cigar_len].unpack('L*')
+    end
+    
+    def cigar_len
+      cigarLen
+    end
+  end
+
+  class Profile < FFI::Profile
+    def byte
+      warn "__m128i* profile_byte"
+    end
+
+    def word
+      warn "__m128i* profile_word"
+    end
+
+    def read
+      pt = super
+      pt[0, read_len].unpack("c*")
+    end
+
+    def mat
+      pt = super
+      pt[0, n].unpack("c*")
+    end
+
+    def read_len
+      readLen
+    end
+  end
+
   class << self
     def ssw_init(read, read_len, mat, n, score_size)
       ptr = FFI.ssw_init(
