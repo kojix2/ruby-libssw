@@ -10,11 +10,18 @@ gem install libssw
 
 ## Usage
 
-TODO:
+```ruby
+require 'libssw'
+SSW = LibSSW
+```
 
 ## Development
 
-TODO:
+```sh
+git clone --recurse-submodules https://github.com/kojix2/ruby-libssw
+bundle exec rake libssw:compile
+bundle exec rake test
+```
 
 ## Contributing
 
