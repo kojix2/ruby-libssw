@@ -2,3 +2,82 @@
 # frozen_string_literal: true
 
 require 'libssw'
+require 'optparse'
+
+opts = {
+  lib_path: nil,
+  nmatch: 2,
+  nmismatch: 2,
+  nopen: 3,
+  next: 1,
+  bprotein: false,
+  smatrix: 'Blosum50',
+  bpath: false,
+  nthr: nil,
+  bbest: false,
+  bsam: nil, # typo?
+  bheader: nil
+}
+
+parser = OptionParser.new do |opt|
+  opt.version = LibSSW::VERSION
+  opt.summary_width = 20
+  opt.banner = 'Usage: rbssw [options] <target file> <query file>'
+  opt.on('-l', '--sLibPath PATH', String,
+         'path of libssw.so') do |v|
+          opts[:sLibPath] = v
+         end
+  opt.on('-m', '--nMatch VAL', Integer,
+         'a positive integer as the score for a match',
+         "in genome sequence alignment. [#{opts[:nmatch]}]") do |v|
+          opts[:nmatch] = v
+         end
+  opt.on('-x', '--nMismatch VAL', Integer,
+         'a positive integer as the score for a mismatch',
+         "in genome sequence alignment. [#{opts[:nmismatch]}]") do |v|
+          opts[:nmismatch] = v
+         end
+  opt.on('-o', '--nOpen VAL', Integer,
+         'a positive integer as the penalty for the gap opening',
+         "in genome sequence alignment. [#{opts[:nopen]}]") do |v|
+          opts[:nopen] = v
+         end
+  opt.on('-e', '--nExt VAL', Integer,
+         'a positive integer as the penalty for the gap extension',
+         "in genome sequence alignment. [#{opts[:next]}]") do |v|
+          opts[:next] = v
+         end
+  opt.on('-p', '--bProtien', TrueClass,
+         'Do protein sequence alignment.',
+         "Without this option, do genome sequence alignment. [#{opts[:bprotein]}]") do |v|
+          opts[:bprotein] = v
+         end
+  opt.on('-a', '--sMatrix VAL', String,
+         "a file for either Blosum or Pam weight matrix. [#{opts[:smatrix]}]") do |v|
+          opts[:smatrix] = v
+         end
+  opt.on('-c', '--bPath', TrueClass,
+         "Return the alignment path. [#{opts[:bpath]}]") do |v|
+          opts[:bpath] = v
+         end
+  opt.on('-f', '--nThr VAL', Integer,
+         'a positive integer.',
+         'Only output the alignments with the Smith-Waterman score >= N.') do |v|
+          opts[:nthr] = v
+         end
+  opt.on('-r', '--bBest', TrueClass,
+         'The best alignment will be picked, between the original read',
+         "alignment and the reverse complement read alignment. [#{opts[:bbest]}]") do |v|
+          opts[:bbest] = v
+         end
+  opt.on('-s', '--bSam', TrueClass,
+         'Output in SAM format. [no header]') do |v| # TYPO?
+          opts[:bsam] = v
+         end
+  opt.on('-header', '--bHeader', TrueClass,
+         'If -s is used, include header in SAM output.') do |v|
+          opts[:bheader] = v
+         end
+end
+
+parser.order!(ARGV)
