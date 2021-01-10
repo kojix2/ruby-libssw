@@ -93,23 +93,6 @@ dEle2Int = {}
 dInt2Ele = {}
 lScore = nil
 
-def align_one(qProfile, rNum, nRLen, nOpen, nExt, nFlag, nMaskLen)
-  res = SSW.ssw_align(qProfile, rNum.pack("c*"), nRLen, nOpen, nExt, nFlag, 0, 0, nMaskLen)
-  res = LibSSW::Align.new(res)
- p nScore = res.score1
- p nScore2 = res.score2
- p nRefBeg = res.ref_begin1
- p nRefEnd = res.ref_end1
- p nQryBeg = res.read_begin1
- p nQryEnd = res.read_end1
- p nRefEnd2 = res.ref_end2
- # nCigarLen = res.cigarLen
- # lCigar = res.cigar[0, 4 * nCigarLen].unpack('L*')
-  SSW.align_destroy(res)
-
- # [nScore, nScore2, nRefBeg, nRefEnd, nQryBeg, nQryEnd, nRefEnd2, nCigarLen, lCigar]
-end
-
 if opts[:bprotein]
   # load AA score matrix
   if !opts[:smatrix]
@@ -188,16 +171,16 @@ end
 Bio::FlatFile.open(opts[:query]) do |query_file|
   query_file.each do |qentry|
     sQId   = qentry.entry_id
-    sQSeq  = qentry.sequence_string + "\n"
+    sQSeq  = qentry.sequence_string
     sQQual = qentry.quality_string
     # build query profile
     qNum = _to_int(sQSeq, lEle, dEle2Int)
-    qProfile = SSW.ssw_init(qNum.pack('c*'), sQSeq.size, lScore.pack('l*'), lEle.size, 2)
+    qProfile = SSW.ssw_init(qNum, sQSeq.size, lScore, lEle.size, 2)
     # build rc query profile
     if opts[:bbest] && !opts[:bprotein]
       sQRcSeq = sQSeq.reverse.each_char.map { |x| dRc[x] }.join
       qRcNum = _to_int(sQRcSeq, lEle, dEle2Int)
-      qRcProfile = SSW.ssw_init(qRcNum.pack('c*'), sQSeq.pack('l*'), mat, lEle.size, 2)
+      qRcProfile = SSW.ssw_init(qRcNum, sQSeq.size, mat, lEle.size, 2)
     end
     # set mask le
     if sQSeq.size > 30
@@ -210,17 +193,20 @@ Bio::FlatFile.open(opts[:query]) do |query_file|
     Bio::FlatFile.open(opts[:target]) do |target_file|
       target_file.each do |tentry|
         sRId  = tentry.entry_id
-        sRSeq = tentry.seq
+        sRSeq = tentry.seq.to_s
         rNum  = _to_int(sRSeq, lEle, dEle2Int)
-          p nMaskLen
-        res = align_one(qProfile, rNum, sRSeq.size, opts[:nopen], opts[:next], nFlag, nMaskLen)
+        res = SSW.ssw_align(
+          qProfile, rNum, sRSeq.size, opts[:nopen], opts[:next], nFlag, 0, 0, nMaskLen
+        )
+        pp res.cigar
         resRc = nil
         if opts[:bbest] && !opts[:bprotein]
-          resRc = align_one(qRcProfile, rNum, sRSeq.size, opts[:nopen], opts[:next], nFlag, nMaskLen)
+          resRc = SSW.align_one(
+            qRcProfile, rNum, sRSeq.size, opts[:nopen], opts[:next], nFlag, 0, 0, nMaskLen
+          )
         end
         # build cigar and trace back path
         strand = 0
-
       end
     end
   end
