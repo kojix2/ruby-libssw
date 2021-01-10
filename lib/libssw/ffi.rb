@@ -31,7 +31,7 @@ module LibSSW
       'uint16_t score2',
       'int32_t ref_begin1',
       'int32_t ref_end1',
-      'int32_t	read_begin1',
+      'int32_t read_begin1',
       'int32_t read_end1',
       'int32_t ref_end2',
       'uint32_t* cigar',
