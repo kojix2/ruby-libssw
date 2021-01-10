@@ -25,14 +25,17 @@ module LibSSW
                    File.expand_path("../vendor/#{lib_name}", __dir__)
                  end
 
-  autoload :FFI, 'libssw/ffi'
+  require_relative 'libssw/ffi'
 
-  extend Forwardable
   Align   = FFI::Align
   Profile = FFI::Profile
-  def_delegators :FFI,
-                 :ssw_init,
-                 :init_destroy,
-                 :align_destroy,
-                 :mark_mismatch
+  class << self
+    extend Forwardable
+    def_delegators 'LibSSW::FFI',
+                   :ssw_init,
+                   :init_destroy,
+                   :ssw_align,
+                   :align_destroy,
+                   :mark_mismatch
+  end
 end
