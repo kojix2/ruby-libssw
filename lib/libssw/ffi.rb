@@ -49,7 +49,12 @@ module LibSSW
     ]
 
     # s_profile* ssw_init (const int8_t* read, const int32_t readLen, const int8_t* mat, const int32_t n, const int8_t score_size)
-    try_extern 's_profile* ssw_init (const int8_t* read, int32_t readLen, const int8_t* mat, int32_t n, int8_t score_size)'
+    try_extern 's_profile* ssw_init ('  \
+               'const int8_t* read,'    \
+               'int32_t readLen,'       \
+               'const int8_t* mat,'     \
+               'int32_t n,'             \
+               'int8_t score_size)'
 
     try_extern 'void init_destroy (s_profile* p)'
 
