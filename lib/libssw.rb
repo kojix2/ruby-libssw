@@ -29,6 +29,7 @@ module LibSSW
   class Align < FFI::Align
     def cigar
       pt = super
+      return [] if cigar_len == 0
       pt[0, 4 * cigar_len].unpack('L*')
     end
     
@@ -39,21 +40,24 @@ module LibSSW
 
   class Profile < FFI::Profile
     def byte
-      warn "__m128i* profile_byte"
+      warn "WARNING: __m128i* profile_byte"
+      super
     end
 
     def word
-      warn "__m128i* profile_word"
+      warn "WARNING: __m128i* profile_word"
+      super
     end
 
     def read
       pt = super
+      return [] if read_len == 0
       pt[0, read_len].unpack("c*")
     end
 
     def mat
       pt = super
-      pt[0, n].unpack("c*")
+      pt[0, n*n].unpack("c*")
     end
 
     def read_len
@@ -64,7 +68,7 @@ module LibSSW
   class << self
     def ssw_init(read, read_len, mat, n, score_size)
       ptr = FFI.ssw_init(
-        read.pack('c*'), read_len, mat.flatten.pack('l*'), n, score_size
+        read.pack('c*'), read_len, mat.flatten.pack('c*'), n, score_size
       )
       SSW::Profile.new(ptr)
     end
