@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fiddle/import'
 
 module LibSSW
@@ -60,7 +62,7 @@ module LibSSW
                'uint8_t flag,'          \
                'uint16_t filters,'      \
                'int32_t filterd,'       \
-               'int32_t maskLen)'       
+               'int32_t maskLen)'
 
     try_extern 'void align_destroy (s_align* a)'
 
