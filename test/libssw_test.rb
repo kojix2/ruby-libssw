@@ -18,10 +18,10 @@ class LibsswTest < Minitest::Test
   end
 
   def test_ssw_init1
-    read = Array.new(100){[0,1,2,3,4].sample}
+    read = Array.new(100) { [0, 1, 2, 3, 4].sample }
     read_len = read.size
     n = 5
-    mat  = Array.new(n * n){[-2,-1,0,1,2].sample}
+    mat = Array.new(n * n) { [-2, -1, 0, 1, 2].sample }
     score_size = 2
     profile = LibSSW.ssw_init(read, read_len, mat, n, score_size)
     assert_instance_of LibSSW::Profile, profile
@@ -33,10 +33,10 @@ class LibsswTest < Minitest::Test
   end
 
   def test_ssw_init2
-    read = Array.new(1000){[0,1,2,3,4,5,6].sample}
+    read = Array.new(1000) { [0, 1, 2, 3, 4, 5, 6].sample }
     read_len = read.size
     n = 7
-    mat  = Array.new(n * n){[-3,-2,-1,0,1,2,3].sample}
+    mat = Array.new(n * n) { [-3, -2, -1, 0, 1, 2, 3].sample }
     score_size = 2
     profile = LibSSW.ssw_init(read, read_len, mat, n, score_size)
     assert_instance_of LibSSW::Profile, profile

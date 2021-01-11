@@ -32,13 +32,13 @@ module LibSSW
   # @!attribute score2
   #   @return [Integer] sub-optimal alignment score
   # @!attribute ref_begin1
-  #   @return [Integer] 
+  #   @return [Integer]
   #     0-based best alignment beginning position on reference;
   #	    ref_begin1 = -1 when the best alignment beginning position is not available
   # @!attribute ref_end1
   #   @return [Integer] 0-based best alignment ending position on reference
   # @!attribute read_begin1
-  #   @return [Integer] 
+  #   @return [Integer]
   #     0-based best alignment beginning position on read;
   #     read_begin1 = -1 when the best alignment beginning position is not available
   # @!attribute read_end1
@@ -152,21 +152,21 @@ module LibSSW
     #   pointer to the query profile structure
     # @param ref [Array]
     #   target sequence;
-    #   the target sequence needs to be numbers and corresponding to the mat 
+    #   the target sequence needs to be numbers and corresponding to the mat
     #   parameter of function ssw_init
     # @param ref_len [Integer] length of the target sequence
     # @param weight_gap0 [Integer] the absolute value of gap open penalty
     # @param weight_gapE [Integer] the absolute value of gap extension penalty
     # @param flag [Integer]
-    #   * bit 5: when setted as 1, function ssw_align will return the best 
+    #   * bit 5: when setted as 1, function ssw_align will return the best
     #     alignment beginning position;
-    #   * bit 6: when setted as 1, if (ref_end1 - ref_begin1 < filterd && 
-    #     read_end1 - read_begin1 < filterd), (whatever bit 5 is setted) the 
-    #     function will return the best alignment beginning position and cigar; 
-    #   * bit 7: when setted as 1, if the best alignment score >= filters, 
-    #     (whatever bit 5 is setted) the function   will return the best 
+    #   * bit 6: when setted as 1, if (ref_end1 - ref_begin1 < filterd &&
+    #     read_end1 - read_begin1 < filterd), (whatever bit 5 is setted) the
+    #     function will return the best alignment beginning position and cigar;
+    #   * bit 7: when setted as 1, if the best alignment score >= filters,
+    #     (whatever bit 5 is setted) the function   will return the best
     #     alignment beginning position and cigar;
-    #   * bit 8: when setted as 1, (whatever bit 5, 6 or 7 is  setted) the 
+    #   * bit 8: when setted as 1, (whatever bit 5, 6 or 7 is  setted) the
     #     function will always return the best alignment beginning position and
     #     cigar. When flag == 0, only the optimal and sub-optimal scores and the
     #     optimal alignment ending position will be returned.
@@ -179,7 +179,7 @@ module LibSSW
     #   as 0, filterd will be used (Please check the decription of the flag
     #   parameter for detailed usage.)
     # @param mask_len [Integer]
-    #   The distance between the optimal and suboptimal alignment ending 
+    #   The distance between the optimal and suboptimal alignment ending
     #   position >= maskLen. We suggest to use readLen/2, if you don't have
     #   special concerns. Note: maskLen has to be >= 15, otherwise this function
     #   will NOT return the suboptimal alignment information. Detailed
@@ -209,7 +209,7 @@ module LibSSW
     # 2. Modify the cigar string:
     # differentiate matches (=), mismatches(X), and softclip(S).
     # @note This method takes a Fiddle::Pointer as an argument. Please read the
-    #   source code and understand it well before using this method. 
+    #   source code and understand it well before using this method.
     #   (Needs to be improved)
     # @param	ref_begin1 [Integer]
     #   0-based best alignment beginning position on the reference sequence
@@ -222,7 +222,7 @@ module LibSSW
     # @param	read [Array]
     #   read sequence
     # @param	read_len [Integer] length of the read
-    # @param	cigar [Fiddle::Pointer] 
+    # @param	cigar [Fiddle::Pointer]
     #   best alignment cigar; stored the same as that in BAM format,
     #   high 28 bits: length, low 4 bits: M/I/D (0/1/2)
     # @param	cigar_len [Integer] length of the cigar string
