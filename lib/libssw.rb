@@ -94,7 +94,7 @@ module LibSSW
       ptr = FFI.ssw_init(
         read.pack('c*'), read_len, mat.flatten.pack('c*'), n, score_size
       )
-      SSW::Profile.new(ptr)
+      LibSSW::Profile.new(ptr)
     end
 
     def init_destroy(profile)
@@ -105,7 +105,7 @@ module LibSSW
       ptr = FFI.ssw_align(
         prof, ref.pack('c*'), ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
       )
-      SSW::Align.new(ptr)
+      LibSSW::Align.new(ptr)
     end
 
     def align_destroy(align)
