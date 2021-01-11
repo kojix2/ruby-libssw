@@ -1,5 +1,7 @@
 # ruby-libssw
 
+![test](https://github.com/kojix2/ruby-libssw/workflows/CI/badge.svg)
+
 :checkered_flag: [libssw](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library) - fast SIMD parallelized implementation of the Smith-Waterman algorithm - for Ruby
 
 ## Installation
