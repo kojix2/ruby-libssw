@@ -11,6 +11,13 @@ end
 
 task default: :test
 
+# Don't add vendor directory to packages for distribution
+task :remove_vendor_directory do
+  FileUtils.remove_dir('vendor')
+end
+
+task release: [:remove_vendor_directory]
+
 namespace :libssw do
   desc 'Compile libssw'
   task :compile do

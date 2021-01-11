@@ -8,6 +8,15 @@
 gem install libssw
 ```
 
+Set the environment variable `LIBSSWDIR` to specify the location of the shared library.
+
+### ubuntu
+
+```
+sudo apt install libssw-dev
+export LIBSSWDIR=/usr/lib/x86_64-linux-gnu/ # libssw.so
+```
+
 ## Usage
 
 ```ruby
