@@ -13,8 +13,10 @@ task default: :test
 
 # Don't add vendor directory to packages for distribution
 task :remove_vendor_directory do
-  warn "Removing the vender directory..."
-  FileUtils.remove_dir('vendor')
+  if Dir.exist?('vendor')
+    warn 'Removing the vender directory...'
+    FileUtils.remove_dir('vendor')
+  end
 end
 
 task release: [:remove_vendor_directory]
