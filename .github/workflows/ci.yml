@@ -19,3 +19,5 @@ jobs:
         gem install bundler
         bundle install
         bundle exec rake
+      env:
+        LIBSSWDIR: /usr/lib/x86_64-linux-gnu/
