@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+warn "This script is under development."
+warn "It doesn't work properly yet!"
+
 require 'bio'
 require 'libssw'
 SSW = LibSSW
