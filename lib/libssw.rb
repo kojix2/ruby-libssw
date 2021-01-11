@@ -65,6 +65,8 @@ module LibSSW
 
     def mat
       pt = super
+      return [] if n.zero?
+
       pt[0, n * n].unpack('c*')
     end
 
