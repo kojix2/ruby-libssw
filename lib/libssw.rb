@@ -26,6 +26,33 @@ module LibSSW
 
   require_relative 'libssw/ffi'
 
+  # structure of the alignment result
+  # @!attribute score1
+  #   @return [Integer] the best alignment score
+  # @!attribute score2
+  #   @return [Integer] sub-optimal alignment score
+  # @!attribute ref_begin1
+  #   @return [Integer] 
+  #     0-based best alignment beginning position on reference;
+  #	    ref_begin1 = -1 when the best alignment beginning position is not available
+  # @!attribute ref_end1
+  #   @return [Integer] 0-based best alignment ending position on reference
+  # @!attribute read_begin1
+  #   @return [Integer] 
+  #     0-based best alignment beginning position on read;
+  #     read_begin1 = -1 when the best alignment beginning position is not available
+  # @!attribute read_end1
+  #   @return [Integer] 0-based best alignment ending position on read
+  # @!attribute read_end2
+  #   @return [Integer] 0-based sub-optimal alignment ending position on read
+  # @!attribute cigar [r]
+  #   @return [Array]
+  #     best alignment cigar; stored the same as that in BAM format,
+  #     high 28 bits: length, low 4 bits: M/I/D (0/1/2);
+  #     cigar = 0 when the best alignment path is not available
+  # @!attribute cigar_len
+  #   @return [Integer]
+  #     length of the cigar string; cigarLen = 0 when the best alignment path is not available
   class Align < FFI::Align
     def cigar
       pt = super
@@ -55,6 +82,12 @@ module LibSSW
     end
   end
 
+  # structure of the query profile
+  # @!attribute read
+  # @!attribute mat
+  # @!attribute read_len
+  # @!attribute n
+  # @!attribute bias
   class Profile < FFI::Profile
     def read
       pt = super
