@@ -19,7 +19,7 @@ module LibSSW
              end
 
   self.ffi_lib = if ENV['LIBSSWDIR'] && !ENV['LIBSSWDIR'].empty?
-                   File.expand_path(lib_name, ENV['LIBUIDIR'])
+                   File.expand_path(lib_name, ENV['LIBSSWDIR'])
                  else
                    File.expand_path("../vendor/#{lib_name}", __dir__)
                  end
@@ -82,7 +82,7 @@ module LibSSW
     end
   end
 
-  # structure of the query profile
+  # structure of the query profile/usr/lib/x86_64-linux-gnu/
   # @!attribute read
   # @!attribute mat
   # @!attribute read_len
