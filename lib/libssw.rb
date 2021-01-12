@@ -67,8 +67,8 @@ module LibSSW
       @read_begin1 = align.read_begin1
       @read_end1   = align.read_end1
       @ref_end2    = align.ref_end2
-      @cigar       = align.cigarLen > 0 ? pt[0, 4 * cigar_len].unpack('L*') : []
       @cigar_len   = align.cigarLen
+      @cigar       = cigar_len > 0 ? align.cigar[0, 4 * cigar_len].unpack('L*') : []
     end
 
     def to_h
@@ -83,36 +83,20 @@ module LibSSW
   # @!attribute n
   # @!attribute bias
   class Profile < FFI::Profile
-    def read
-      pt = super
-      return [] if read_len.zero?
+    Keys = %i[read mat read_len n bias]
+    attr_accessor(*Keys)
 
-      pt[0, read_len].unpack('c*')
-    end
-
-    def mat
-      pt = super
-      return [] if n.zero?
-
-      pt[0, n * n].unpack('c*')
-    end
-
-    def read_len
-      readLen
+    def initialize(ptr)
+      profile = LibSSW::FFI::Profile.new(ptr)
+      @read_len = profile.readLen
+      @read     = read_len > 0 ? profile.read[0, read_len].unpack('c*') : []
+      @n        = profile.n
+      @mat      = n > 0 ? profile.mat[0, n * n].unpack('c*') : []
+      @bias     = profile.bias
     end
 
     def to_h
-      h = {}
-      %i[byte
-         word
-         read
-         mat
-         read_len
-         n
-         bias].each do |k|
-        h[k] = __send__(k)
-      end
-      h
+      Keys.map { |k| [k, __send__(k)] }.to_h
     end
   end
 
