@@ -4,3 +4,4 @@ Layout/LineLength:
 AllCops:
   Exclude:
     - lib/libssw/BLOSUM50.rb
+    - lib/libssw/BLOSUM62.rb
