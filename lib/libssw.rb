@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'libssw/version'
+require_relative 'libssw/BLOSUM50'
+require_relative 'libssw/BLOSUM62'
 
 module LibSSW
   class Error < StandardError; end
