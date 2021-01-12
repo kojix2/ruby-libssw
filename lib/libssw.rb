@@ -59,6 +59,7 @@ module LibSSW
     attr_accessor(*Keys)
 
     def initialize(ptr)
+      @ptr         = ptr
       align        = FFI::Align.new(ptr)
       @score1      = align.score1
       @score2      = align.score2
@@ -74,6 +75,11 @@ module LibSSW
     def to_h
       Keys.map { |k| [k, __send__(k)] }.to_h
     end
+
+    # For consistency with init_destroy.
+    def to_ptr
+      @ptr
+    end
   end
 
   # structure of the query profile/usr/lib/x86_64-linux-gnu/
@@ -87,6 +93,7 @@ module LibSSW
     attr_accessor(*Keys)
 
     def initialize(ptr)
+      @ptr = ptr
       profile = LibSSW::FFI::Profile.new(ptr)
       @read_len = profile.readLen
       @read     = read_len > 0 ? profile.read[0, read_len].unpack('c*') : []
@@ -97,6 +104,11 @@ module LibSSW
 
     def to_h
       Keys.map { |k| [k, __send__(k)] }.to_h
+    end
+
+    # For consistency with init_destroy.
+    def to_ptr
+      @ptr
     end
   end
 
@@ -121,6 +133,8 @@ module LibSSW
     # Release the memory allocated by function ssw_init.
     # @param p [Fiddle::Pointer, LibSSW::Profile, LibSSW::FFI::Profile]
     #   pointer to the query profile structure
+    # @note Ruby has garbage collection, so there is not much reason to call
+    #   this method.
     def init_destroy(profile)
       FFI.init_destroy(profile)
     end
