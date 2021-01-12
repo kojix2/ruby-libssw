@@ -53,32 +53,26 @@ module LibSSW
   # @!attribute cigar_len
   #   @return [Integer]
   #     length of the cigar string; cigarLen = 0 when the best alignment path is not available
-  class Align < FFI::Align
-    def cigar
-      pt = super
-      return [] if cigar_len.zero?
+  class Align
+    Keys = %i[score1 score2 ref_begin1 ref_end1
+              read_begin1 read_end1 ref_end2 cigar cigar_len]
+    attr_accessor(*Keys)
 
-      pt[0, 4 * cigar_len].unpack('L*')
-    end
-
-    def cigar_len
-      cigarLen
+    def initialize(ptr)
+      align        = FFI::Align.new(ptr)
+      @score1      = align.score1
+      @score2      = align.score2
+      @ref_begin1  = align.ref_begin1
+      @ref_end1    = align.ref_end1
+      @read_begin1 = align.read_begin1
+      @read_end1   = align.read_end1
+      @ref_end2    = align.ref_end2
+      @cigar       = align.cigarLen > 0 ? pt[0, 4 * cigar_len].unpack('L*') : []
+      @cigar_len   = align.cigarLen
     end
 
     def to_h
-      h = {}
-      %i[score1
-         score2
-         ref_begin1
-         ref_end1
-         read_begin1
-         read_end1
-         ref_end2
-         cigar
-         cigar_len].each do |k|
-        h[k] = __send__(k)
-      end
-      h
+      Keys.map { |k| [k, __send__(k)] }.to_h
     end
   end
 

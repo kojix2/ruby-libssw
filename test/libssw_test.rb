@@ -8,13 +8,13 @@ class LibsswTest < Minitest::Test
   end
 
   def test_align_struct_malloc
-    assert_instance_of LibSSW::FFI::Align, LibSSW::FFI::Align.malloc
-    assert_instance_of LibSSW::Align, LibSSW::Align.malloc
+    assert_instance_of LibSSW::FFI::Align, (ptr = LibSSW::FFI::Align.malloc)
+    assert_instance_of LibSSW::Align, LibSSW::Align.new(ptr)
   end
 
   def test_profile_struct_malloc
-    assert_instance_of LibSSW::FFI::Profile, LibSSW::FFI::Profile.malloc
-    assert_instance_of LibSSW::Profile, LibSSW::Profile.malloc
+    assert_instance_of LibSSW::FFI::Profile, (ptr = LibSSW::FFI::Profile.malloc)
+    assert_instance_of LibSSW::Profile, LibSSW::Profile.new(ptr)
   end
 
   def test_ssw_init1
