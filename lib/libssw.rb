@@ -36,7 +36,7 @@ module LibSSW
   # @!attribute ref_begin1
   #   @return [Integer]
   #     0-based best alignment beginning position on reference;
-  #	    ref_begin1 = -1 when the best alignment beginning position is not available
+  #     ref_begin1 = -1 when the best alignment beginning position is not available
   # @!attribute ref_end1
   #   @return [Integer] 0-based best alignment ending position on reference
   # @!attribute read_begin1
@@ -182,7 +182,7 @@ module LibSSW
     #   checking the second largest score in the array that contains the maximal
     #   score of each column of the SW matrix. In order to avoid picking the
     #   scores that belong to the alignments sharing the partial best alignment,
-    #   SSW C library masks the	reference loci nearby (mask length = maskLen)
+    #   SSW C library masks the reference loci nearby (mask length = maskLen)
     #   the best alignment ending position and locates the second largest score
     #   from the unmasked elements.
     def ssw_align(prof, ref, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len)
@@ -205,21 +205,21 @@ module LibSSW
     # @note This method takes a Fiddle::Pointer as an argument. Please read the
     #   source code and understand it well before using this method.
     #   (Needs to be improved)
-    # @param	ref_begin1 [Integer]
+    # @param ref_begin1 [Integer]
     #   0-based best alignment beginning position on the reference sequence
-    # @param	read_begin1 [Integer]
+    # @param read_begin1 [Integer]
     #   0-based best alignment beginning position on the read sequence
-    # @param	read_end1 [Integer]
+    # @param read_end1 [Integer]
     #   0-based best alignment ending position on the read sequence
-    # @param	ref [Array]
+    # @param ref [Array]
     #   reference sequence
-    # @param	read [Array]
+    # @param read [Array]
     #   read sequence
-    # @param	read_len [Integer] length of the read
-    # @param	cigar [Fiddle::Pointer]
+    # @param read_len [Integer] length of the read
+    # @param cigar [Fiddle::Pointer]
     #   best alignment cigar; stored the same as that in BAM format,
     #   high 28 bits: length, low 4 bits: M/I/D (0/1/2)
-    # @param	cigar_len [Integer] length of the cigar string
+    # @param cigar_len [Integer] length of the cigar string
     # @return [Integer] The number of mismatches. The cigar and cigarLen are modified.
     def mark_mismatch(ref_begin1, read_begin1, read_end1, ref, read, read_len, cigar, cigar_len)
       warn 'implementation: fiexme: **cigar' # FIXME
