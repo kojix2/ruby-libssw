@@ -129,7 +129,25 @@ module LibSSW
       ptr = FFI.ssw_init(
         read.pack('c*'), read_len, mat.flatten.pack('c*'), n, score_size
       )
-      LibSSW::Profile.new(ptr)
+      profile = LibSSW::Profile.new(ptr)
+      # Preventing Garbage Collection
+      %i[read read_len mat n].zip([read, read_len, mat, n]).each do |name, obj|
+        if profile.public_send(name) != obj
+          warn "[Error] Fixed structure member '#{name}'"
+          warn "        * expected value: #{obj}"
+          warn "        *   actual value: #{profile.public_send(name)}"
+          warn "        This may have been caused by Ruby'S GC."
+        end
+      end
+      # Preventing Garbage Collection
+      # You can call the accessors here. 
+      # But, to make it clear that it is a GC workaround, 
+      # instance_variable_set is used.
+      profile.instance_variable_set(:@read,     read)
+      profile.instance_variable_set(:@read_len, read_len)
+      profile.instance_variable_set(:@mat,      mat)
+      profile.instance_variable_set(:@n,        n)
+      profile
     end
 
     # Release the memory allocated by function ssw_init.
