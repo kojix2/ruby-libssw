@@ -79,5 +79,6 @@ class LibsswTest < Minitest::Test
     assert_equal 0, align.ref_end2
     assert_equal [80], align.cigar
     assert_equal 1, align.cigar_len
+    assert_equal '5M', align.cigar_string
   end
 end

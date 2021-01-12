@@ -78,6 +78,10 @@ module LibSSW
       Keys.map { |k| [k, __send__(k)] }.to_h
     end
 
+    def cigar_string
+      LibSSW.array_to_cigar_string(@cigar)
+    end
+
     # For consistency with init_destroy.
     def to_ptr
       @ptr
@@ -244,6 +248,17 @@ module LibSSW
       FFI.mark_mismatch(
         ref_begin1, read_begin1, read_end1, ref.pack('c*'), read.pack('c*'), read_len, cigar, cigar_len.pack('l*')
       )
+    end
+
+    def array_to_cigar_string(arr)
+      cigar_string = String.new
+      arr.each do |x|
+        n = x >> 4
+        m = x & 15
+        c = m > 8 ? 'M' : 'MIDNSHP=X'[m]
+        cigar_string << n.to_s << c
+      end
+      cigar_string
     end
   end
 end

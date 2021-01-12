@@ -54,6 +54,10 @@ class AlignTest < Minitest::Test
     assert_equal 0, @align.cigar_len
   end
 
+  def test_cigar_string
+    assert_equal '', @align.cigar_string
+  end
+
   def test_to_h
     assert_equal LibSSW::Align::Keys, @align.to_h.keys
     assert_equal [0, 0, 0, 0, 0, 0, 0, [], 0], @align.to_h.values
