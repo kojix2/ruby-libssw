@@ -4,6 +4,8 @@
 
 :checkered_flag: [libssw](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library) - fast SIMD parallelized implementation of the Smith-Waterman algorithm - for Ruby
 
+:construction: Under development.
+
 ## Installation
 
 ```ssh
