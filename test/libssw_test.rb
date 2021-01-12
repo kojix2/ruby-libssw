@@ -58,7 +58,7 @@ class LibsswTest < Minitest::Test
   end
 
   def test_ssw_align
-    ref = %w[0 0 0 0 0 0 0 0 0 0 1 2 3 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0].map(&:to_i)
+    ref = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ref_len = ref.size
     read = [0, 1, 2, 3, 3]
     read_len = read.size
@@ -71,12 +71,12 @@ class LibsswTest < Minitest::Test
     profile = LibSSW.ssw_init(read, read_len, mat, n, 2)
     align = LibSSW.ssw_align(profile, ref, ref_len, 3, 1, 1, 0, 0, 15)
     assert_equal 10, align.score1
-    assert_equal 0, align.score2
+    assert_equal 3, align.score2
     assert_equal 9, align.ref_begin1
     assert_equal 13, align.ref_end1
     assert_equal 0, align.read_begin1
     assert_equal 4, align.read_end1
-    assert_equal 0, align.ref_end2
+    assert_equal 29, align.ref_end2
     assert_equal [80], align.cigar
     assert_equal 1, align.cigar_len
     assert_equal '5M', align.cigar_string
