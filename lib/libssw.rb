@@ -69,7 +69,7 @@ module LibSSW
       cstruct.n       = n
       ptr.instance_variable_set(:@read_str, read_str)
       ptr.instance_variable_set(:@read_len, read_len)
-      ptr.instance_variable_set(:@mat_str,  mat)
+      ptr.instance_variable_set(:@mat_str,  mat_str)
       ptr.instance_variable_set(:@n,        n)
       profile
     end
