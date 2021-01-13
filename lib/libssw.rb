@@ -52,12 +52,7 @@ module LibSSW
         score_size
       )
       profile = LibSSW::Profile.new(ptr)
-      # Preventing Garbage Collection
-      ptr.instance_variable_set(:@read_str, read_str)
-      ptr.instance_variable_set(:@read_len, read_len)
-      ptr.instance_variable_set(:@mat_str,  mat)
-      ptr.instance_variable_set(:@n,        n)
-      # Preventing Garbage Collection
+      # Check Garbage Collection
       %i[read read_len mat n].zip([read, read_len, mat, n]).each do |name, obj|
         next unless profile.public_send(name) != obj
 
@@ -66,6 +61,16 @@ module LibSSW
         warn "        *   actual value: #{profile.public_send(name)}"
         warn "        This may have been caused by Ruby'S GC."
       end
+      # Preventing Garbage Collection --force
+      cstruct         = profile.cstruct
+      cstruct.read    = read_str
+      cstruct.mat     = mat_str
+      cstruct.readLen = read_len
+      cstruct.n       = n
+      ptr.instance_variable_set(:@read_str, read_str)
+      ptr.instance_variable_set(:@read_len, read_len)
+      ptr.instance_variable_set(:@mat_str,  mat)
+      ptr.instance_variable_set(:@n,        n)
       profile
     end
 
