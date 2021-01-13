@@ -42,27 +42,30 @@ module LibSSW
     #   * if your estimated best alignment score >= 255, please set 1;
     #   * if you don't know, please set 2
     def ssw_init(read, read_len, mat, n, score_size)
+      read_str = read.pack('c*')
+      mat_str  = mat.flatten.pack('c*')
       ptr = FFI.ssw_init(
-        read.pack('c*'), read_len, mat.flatten.pack('c*'), n, score_size
+        read_str,
+        read_len,
+        mat_str,
+        n,
+        score_size
       )
       profile = LibSSW::Profile.new(ptr)
+      # Preventing Garbage Collection
+      ptr.instance_variable_set(:@read_str, read_str)
+      ptr.instance_variable_set(:@read_len, read_len)
+      ptr.instance_variable_set(:@mat_str,  mat)
+      ptr.instance_variable_set(:@n,        n)
       # Preventing Garbage Collection
       %i[read read_len mat n].zip([read, read_len, mat, n]).each do |name, obj|
         next unless profile.public_send(name) != obj
 
-        warn "[Error] Fixed structure member '#{name}'"
+        warn "[Error] Struct member: '#{name}'"
         warn "        * expected value: #{obj}"
         warn "        *   actual value: #{profile.public_send(name)}"
         warn "        This may have been caused by Ruby'S GC."
       end
-      # Preventing Garbage Collection
-      # You can call the accessors here.
-      # But, to make it clear that it is a GC workaround,
-      # instance_variable_set is used.
-      profile.instance_variable_set(:@read,     read)
-      profile.instance_variable_set(:@read_len, read_len)
-      profile.instance_variable_set(:@mat,      mat)
-      profile.instance_variable_set(:@n,        n)
       profile
     end
 
@@ -120,9 +123,13 @@ module LibSSW
     #   the best alignment ending position and locates the second largest score
     #   from the unmasked elements.
     def ssw_align(prof, ref, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len)
+      ref_str = ref.pack('c*')
       ptr = FFI.ssw_align(
-        prof, ref.pack('c*'), ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
+        prof, ref_str, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
       )
+      # Not sure yet if we should set the instance variable to the pointer as a 
+      # garbage collection workaround.
+      # For example: instance_variable_set(:@ref_str, ref_str)
       LibSSW::Align.new(ptr)
     end
 
