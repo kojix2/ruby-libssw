@@ -49,6 +49,10 @@ align   = LibSSW.ssw_align(profile, ref, 3, 1, 1, 0, 0, 15)
 p align.to_h
 ```
 
+## Documentation
+
+* [API Documentation](https://rubydoc.info/gems/libssw)
+
 ## Development
 
 ```sh
