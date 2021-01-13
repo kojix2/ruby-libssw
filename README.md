@@ -1,6 +1,8 @@
 # ruby-libssw
 
 ![test](https://github.com/kojix2/ruby-libssw/workflows/CI/badge.svg)
+[![Gem Version](https://badge.fury.io/rb/libssw.svg)](https://badge.fury.io/rb/libssw)
+[![Docs Latest](https://img.shields.io/badge/docs-latest-blue.svg)](https://rubydoc.info/gems/libssw)
 
 :checkered_flag: [libssw](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library) - fast SIMD parallelized implementation of the Smith-Waterman algorithm - for Ruby
 
