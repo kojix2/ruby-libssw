@@ -28,5 +28,14 @@ module LibSSW
       @mat      = n.positive? ? profile.mat[0, n * n].unpack('c*') : []
       @bias     = profile.bias
     end
+
+    def to_ptr
+      # Garbage collection warkaround
+      # cstruct.read    = p @ptr.instance_variable_get(:@read_str)
+      # cstruct.mat     = p @ptr.instance_variable_get(:@mat_str)
+      # cstruct.readLen = p @ptr.instance_variable_get(:@read_len)
+      # cstruct.n       = p @ptr.instance_variable_get(:@n)
+      @ptr
+    end
   end
 end
