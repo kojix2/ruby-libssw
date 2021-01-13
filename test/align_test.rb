@@ -18,8 +18,9 @@ class AlignTest < Minitest::Test
          read_end1
          ref_end2
          cigar
-         cigar_len],
-      LibSSW::Align::Keys
+         cigar_len
+         cigar_string],
+      LibSSW::Align.keys
   end
 
   def test_score1
@@ -59,7 +60,7 @@ class AlignTest < Minitest::Test
   end
 
   def test_to_h
-    assert_equal LibSSW::Align::Keys, @align.to_h.keys
-    assert_equal [0, 0, 0, 0, 0, 0, 0, [], 0], @align.to_h.values
+    assert_equal LibSSW::Align.keys, @align.to_h.keys
+    assert_equal [0, 0, 0, 0, 0, 0, 0, [], 0, ''], @align.to_h.values
   end
 end

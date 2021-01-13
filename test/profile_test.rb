@@ -9,7 +9,13 @@ class ProfileTest < Minitest::Test
   end
 
   def test_keys
-    assert_equal %i[read mat read_len n bias], LibSSW::Profile::Keys
+    assert_equal \
+      %i[read
+         mat
+         read_len
+         n
+         bias],
+      LibSSW::Profile.keys
   end
 
   def test_read
@@ -33,7 +39,7 @@ class ProfileTest < Minitest::Test
   end
 
   def test_to_h
-    assert_equal LibSSW::Profile::Keys, @profile.to_h.keys
+    assert_equal LibSSW::Profile.keys, @profile.to_h.keys
     assert_equal [[], [], 0, 0, 0], @profile.to_h.values
   end
 end
