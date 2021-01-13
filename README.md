@@ -48,7 +48,7 @@ mat = [2, -2, -2, -2,  0,
 profile = LibSSW.ssw_init(read, read_len, mat, n, 2)
 align   = LibSSW.ssw_align(profile, ref, ref_len, 3, 1, 1, 0, 0, 15)
 pp align.to_h
-p align.sigar_string
+p align.cigar_string
 
 ```
 
