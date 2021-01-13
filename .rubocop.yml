@@ -1,6 +1,9 @@
 Layout/LineLength:
   Max: 120
 
+Style/PreferredHashMethods:
+  EnforcedStyle: verbose
+
 AllCops:
   Exclude:
     - lib/libssw/BLOSUM50.rb
