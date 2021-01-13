@@ -36,20 +36,15 @@ bundle exec rake install
 require 'libssw'
 
 ref = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-ref_len = ref.size
 read = [0, 1, 2, 3, 3]
-read_len = read.size
-n = 5
 mat = [2, -2, -2, -2,  0,
       -2,  2, -2, -2,  0,
       -2, -2,  2, -2,  0,
       -2, -2, -2,  2,  0,
        0,  0,  0,  0,  0]
-profile = LibSSW.ssw_init(read, read_len, mat, n, 2)
-align   = LibSSW.ssw_align(profile, ref, ref_len, 3, 1, 1, 0, 0, 15)
-pp align.to_h
-p align.cigar_string
-
+profile = LibSSW.ssw_init(read, mat)
+align   = LibSSW.ssw_align(profile, ref, 3, 1, 1, 0, 0, 15)
+p align.to_h
 ```
 
 ## Development

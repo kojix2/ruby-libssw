@@ -53,6 +53,7 @@ module LibSSW
       @ref_end2     = align.ref_end2
       @cigar_len    = align.cigarLen
       @cigar        = cigar_len.positive? ? align.cigar[0, 4 * cigar_len].unpack('L*') : []
+      # Attributes for ruby binding only
       @cigar_string = LibSSW.array_to_cigar_string(@cigar)
     end
   end

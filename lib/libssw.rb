@@ -33,17 +33,22 @@ module LibSSW
   class << self
     # Create the query profile using the query sequence.
     # @param read [Array] query sequence; the query sequence needs to be numbers
-    # @param read_len [Integer] length of the query sequence
     # @param mat [Array] substitution matrix; mat needs to be corresponding to the read sequence
     # @param n [Integer] the square root of the number of elements in mat (mat has n*n elements)
+    #                    If you omit this argument, the square root of the size of mat will be set.
     # @param score_size [Integer]
     #   estimated Smith-Waterman score;
     #   * if your estimated best alignment score is surely < 255 please set 0;
     #   * if your estimated best alignment score >= 255, please set 1;
     #   * if you don't know, please set 2
-    def ssw_init(read, read_len, mat, n, score_size)
+    def ssw_init(read, mat, n = nil, score_size: 2)
       read_str = read.pack('c*')
-      mat_str  = mat.flatten.pack('c*')
+      read_len = read.size
+      mat = mat.to_a.flatten
+      n = Math.sqrt(mat.size) if n.nil?
+      raise "Not a square matrix. size: #{mat.size}, n: #{n}" if mat.size != n * n
+
+      mat_str = mat.flatten.pack('c*')
       ptr = FFI.ssw_init(
         read_str,
         read_len,
@@ -90,7 +95,6 @@ module LibSSW
     #   target sequence;
     #   the target sequence needs to be numbers and corresponding to the mat
     #   parameter of function ssw_init
-    # @param ref_len [Integer] length of the target sequence
     # @param weight_gap0 [Integer] the absolute value of gap open penalty
     # @param weight_gapE [Integer] the absolute value of gap extension penalty
     # @param flag [Integer]
@@ -127,12 +131,13 @@ module LibSSW
     #   SSW C library masks the reference loci nearby (mask length = maskLen)
     #   the best alignment ending position and locates the second largest score
     #   from the unmasked elements.
-    def ssw_align(prof, ref, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len)
+    def ssw_align(prof, ref, weight_gap0, weight_gapE, flag, filters, filterd, mask_len)
       ref_str = ref.pack('c*')
+      ref_len = ref.size
       ptr = FFI.ssw_align(
         prof, ref_str, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
       )
-      # Not sure yet if we should set the instance variable to the pointer as a 
+      # Not sure yet if we should set the instance variable to the pointer as a
       # garbage collection workaround.
       # For example: instance_variable_set(:@ref_str, ref_str)
       LibSSW::Align.new(ptr)
