@@ -28,6 +28,8 @@ module LibSSW
   # @!attribute cigar_len
   #   @return [Integer]
   #     length of the cigar string; cigarLen = 0 when the best alignment path is not available
+  # @!attribute cigar_string
+  #   @return [String] cigar string
   class Align < FFI::Align
     def self.keys
       %i[score1 score2 ref_begin1 ref_end1
