@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'struct_helper'
-
 module LibSSW
   # structure of the alignment result
   # @!attribute score1
@@ -31,15 +29,13 @@ module LibSSW
   #   @return [Integer]
   #     length of the cigar string; cigarLen = 0 when the best alignment path is not available
   class Align < FFI::Align
-    include StructHelper
-
     def self.keys
       %i[score1 score2 ref_begin1 ref_end1
          read_begin1 read_end1 ref_end2 cigar cigar_len cigar_string]
     end
 
     # This class is read_only
-    attr_reader(*keys, :ptr, :cstruct)
+    attr_reader(*keys)
 
     def initialize(ptr)
       @ptr          = ptr
@@ -55,6 +51,11 @@ module LibSSW
       @cigar        = cigar_len.positive? ? align.cigar[0, 4 * cigar_len].unpack('L*') : []
       # Attributes for ruby binding only
       @cigar_string = LibSSW.array_to_cigar_string(@cigar)
+      LibSSW.align_destroy(ptr)
+    end
+
+    def to_h
+      self.class.keys.map { |k| [k, __send__(k)] }.to_h
     end
   end
 end

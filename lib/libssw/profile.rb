@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'struct_helper'
-
 module LibSSW
   # structure of the query profile/usr/lib/x86_64-linux-gnu/
   # @!attribute read
@@ -10,8 +8,6 @@ module LibSSW
   # @!attribute n
   # @!attribute bias
   class Profile < FFI::Profile
-    include StructHelper
-
     def self.keys
       %i[read mat read_len n bias]
     end
@@ -31,11 +27,11 @@ module LibSSW
 
     def to_ptr
       # Garbage collection warkaround
-      # cstruct.read    = p @ptr.instance_variable_get(:@read_str)
-      # cstruct.mat     = p @ptr.instance_variable_get(:@mat_str)
-      # cstruct.readLen = p @ptr.instance_variable_get(:@read_len)
-      # cstruct.n       = p @ptr.instance_variable_get(:@n)
-      @ptr
+      ptr
+    end
+
+    def to_h
+      self.class.keys.map { |k| [k, __send__(k)] }.to_h
     end
   end
 end
