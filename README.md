@@ -40,11 +40,11 @@ require 'libssw'
 SSW = LibSSW
 
 ref_str  = "AAAAAAAAACGTTAAAAAAAAAA"
-ref_int  = SSW.dna_to_int_array(sref) 
+ref_int  = SSW.dna_to_int_array(ref_str) 
 # [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 read_str1 = "ACGTT"
-read_str2 = SSW.dna_complement(read_str)
+read_str2 = SSW.dna_complement(read_str1)
 read_int1 = SSW.dna_to_int_array(read_str1)
 # [0, 1, 2, 3, 3]
 read_int2 = SSW.dna_to_int_array(read_str2)
@@ -57,9 +57,9 @@ mat = SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
 #       -2, -2, -2,  2,  0,
 #        0,  0,  0,  0,  0]
 
-profile1 = LibSSW.ssw_init(iread, mat)
-align1   = LibSSW.ssw_align(profile1, iref, 3, 1, 1, 0, 0, 15)
-pp align.to_h
+profile1 = LibSSW.ssw_init(read_int1, mat)
+align1   = LibSSW.ssw_align(profile1, ref_int, 3, 1, 1, 0, 0, 15)
+pp align1.to_h
 # {
 #  :score1       => 10,
 #  :score2       => 0,
@@ -73,8 +73,8 @@ pp align.to_h
 #  :cigar_string => "5M"
 # }
 
-profile2 = LibSSW.ssw_init(ireadrc, mat)
-align2     = LibSSW.ssw_align(profile2, iref, 3, 1, 1, 0, 0, 15)
+profile2 = LibSSW.ssw_init(read_int2, mat)
+align2     = LibSSW.ssw_align(profile2, ref_int, 3, 1, 1, 0, 0, 15)
 pp align2
 
 ```
