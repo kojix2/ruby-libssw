@@ -75,8 +75,19 @@ pp align1.to_h
 
 profile2 = LibSSW.ssw_init(read_int2, mat)
 align2     = LibSSW.ssw_align(profile2, ref_int, 3, 1, 1, 0, 0, 15)
-pp align2
-
+pp align2.to_h
+# {
+#  :score1       => 10,
+#  :score2       => 0,
+#  :ref_begin1   => 7,
+#  :ref_end1     => 11,
+#  :read_begin1  => 0,
+#  :read_end1    => 4,
+#  :ref_end2     => 0,
+#  :cigar        => [80],
+#  :cigar_len    => 1,
+#  :cigar_string => "5M"
+# }
 ```
 
 
