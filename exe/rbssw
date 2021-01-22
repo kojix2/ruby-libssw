@@ -99,13 +99,9 @@ lScore = nil
 if opts[:bprotein]
   # load AA score matrix
   if !opts[:smatrix]
-    lEle = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K',
-            'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V', 'B', 'Z', 'X', '*']
-    lEle.each_with_index do |ele, i|
-      dEle2Int[ele] = i
-      dEle2Int[ele.downcase] = i
-      dInt2Ele[i] = ele
-    end
+    lEle = AAELEMENTS
+    dEle2Int = AA2INT
+    dInt2Ele = INT2AA
     nEleNum = lEle.size
     lScore = SSW::Blosum50
   else
@@ -113,15 +109,10 @@ if opts[:bprotein]
   end
 elsif !opts[:smatrix]
   # init DNA score matrix
-  lEle = %w[A C G T N]
-  dRc = { 'A': 'C', 'C': 'G', 'G': 'C', 'T': 'A', 'a': 'C', 'c': 'G', 'g': 'C', 't': 'A' }
-  lEle.each_with_index do |ele, i|
-    dEle2Int[ele] = i
-    dEle2Int[ele.downcase] = i
-    dInt2Ele[i] = ele
-  end
-  # dEle2Int = {'A': 0, 'a': 0, 'C': 1, 'G': 2, 'g': 2, 'c': 1, 'N': 4, 'T': 3, 'n': 4, 't': 3}
-  # dInt2Ele = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: 'N'}
+  lEle = DNAELEMENTS
+  dRc = DNARC
+  dEle2Int = DNA2INT
+  dInt2Ele = INT2DNA
   nEleNum = lEle.size # 5
   lScore = Array.new(nEleNum**2, 0)
   (nEleNum - 1).times do |i|
