@@ -181,9 +181,10 @@ module LibSSW
     #   SSW C library masks the reference loci nearby (mask length = maskLen)
     #   the best alignment ending position and locates the second largest score
     #   from the unmasked elements.
-    def ssw_align(prof, ref, weight_gap0, weight_gapE, flag, filters, filterd, mask_len)
+    def ssw_align(prof, ref, weight_gap0, weight_gapE, flag, filters, filterd, mask_len = nil)
       ref_str = ref.pack('c*')
       ref_len = ref.size
+      mask_len ||= [ref_len / 2, 15].max
       ptr = FFI.ssw_align(
         prof, ref_str, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
       )
