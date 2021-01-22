@@ -37,17 +37,41 @@ bundle exec rake install
 ```ruby
 require 'libssw'
 
-ref = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-read = [0, 1, 2, 3, 3]
-mat = [2, -2, -2, -2,  0,
-      -2,  2, -2, -2,  0,
-      -2, -2,  2, -2,  0,
-      -2, -2, -2,  2,  0,
-       0,  0,  0,  0,  0]
-profile = LibSSW.ssw_init(read, mat)
-align   = LibSSW.ssw_align(profile, ref, 3, 1, 1, 0, 0, 15)
-p align.to_h
+SSW = LibSSW
+
+sref  = "AAAAAAAAACGTTAAAAAAAAAA"
+iref  = SSW.dna_to_int_array(sref) 
+# [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+sread = "ACGTT"
+iread = SSW.dna_to_int_array(sread)
+# [0, 1, 2, 3, 3]
+
+mat = SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
+# mat = [2, -2, -2, -2,  0,
+#       -2,  2, -2, -2,  0,
+#       -2, -2,  2, -2,  0,
+#       -2, -2, -2,  2,  0,
+#        0,  0,  0,  0,  0]
+
+profile = LibSSW.ssw_init(iread, mat)
+align   = LibSSW.ssw_align(profile, iref, 3, 1, 1, 0, 0, 15)
+
+pp align.to_h
+# {
+#  :score1       => 10,
+#  :score2       => 0,
+#  :ref_begin1   => 8,
+#  :ref_end1     => 12,
+#  :read_begin1  => 0,
+#  :read_end1    => 4,
+#  :ref_end2     => 0,
+#  :cigar        => [80],
+#  :cigar_len    => 1,
+#  :cigar_string => "5M"
+# }
 ```
+
 
 ## Documentation
 
