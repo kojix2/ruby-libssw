@@ -90,4 +90,18 @@ class LibsswTest < Minitest::Test
             0, 0, 0, 0, 0]
     assert_equal mat2, LibSSW.create_scoring_matrix(LibSSW::DNAElements, 5, -3)
   end
+
+  def test_dna_to_int_array
+    seq = 'TCGATCGATCGANNNNM'
+    int = [3, 1, 2, 0, 3, 1, 2, 0, 3, 1, 2, 0, 4, 4, 4, 4, 4]
+    assert_equal int, LibSSW.dna_to_int_array(seq)
+    assert_equal int.reverse, LibSSW.dna_to_int_array(seq.reverse)
+  end
+
+  def test_int_array_to_dna
+    int = [3, 1, 2, 0, 3, 1, 2, 0, 3, 1, 2, 0, 4, 4, 4, 4, 5]
+    seq = 'TCGATCGATCGANNNNN'
+    assert_equal seq, LibSSW.int_array_to_dna(int)
+    assert_equal seq.reverse, LibSSW.int_array_to_dna(int.reverse)
+  end
 end

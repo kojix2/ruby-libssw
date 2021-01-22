@@ -248,8 +248,8 @@ module LibSSW
 
     # Create scoring matrix of Smith-Waterman algrithum.
     # @param [Array] elements
-    # @match_score [Integer] match_score
-    # @mismatch_score [Integer] mismatch_score
+    # @param [Integer] match_score
+    # @param [Integer] mismatch_score
     def create_scoring_matrix(elements, match_score, mismatch_score)
       size = elements.size
       score = Array.new(size * size, 0)
@@ -260,6 +260,22 @@ module LibSSW
         end
       end
       score
+    end
+
+    # @param [String] seq
+    def dna_to_int_array(seq)
+      raise ArgumentError, "seq must be a string" unless seq.is_a? String
+      seq.each_char.map do |base|
+        DNA2INT[base] || DNA2INT['N']
+      end
+    end
+
+    # @param [Array] int array
+    def int_array_to_dna(arr)
+      raise ArgumentError, "arr must be an Array" unless arr.is_a? Array
+      arr.map do |i|
+        INT2DNA[i] || 'N'
+      end.join
     end
   end
 end
