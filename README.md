@@ -44,8 +44,11 @@ iref  = SSW.dna_to_int_array(sref)
 # [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 sread = "ACGTT"
+sreadrc = SSW.dna_complement(sread)
 iread = SSW.dna_to_int_array(sread)
 # [0, 1, 2, 3, 3]
+ireadrc = SSW.dna_to_int_array(sreadc)
+# [0, 0, 1, 2, 3]
 
 mat = SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
 # mat = [2, -2, -2, -2,  0,
@@ -55,8 +58,7 @@ mat = SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
 #        0,  0,  0,  0,  0]
 
 profile = LibSSW.ssw_init(iread, mat)
-align   = LibSSW.ssw_align(profile, iref, 3, 1, 1, 0, 0, 15)
-
+align1   = LibSSW.ssw_align(profile, iref, 3, 1, 1, 0, 0, 15)
 pp align.to_h
 # {
 #  :score1       => 10,
@@ -70,6 +72,11 @@ pp align.to_h
 #  :cigar_len    => 1,
 #  :cigar_string => "5M"
 # }
+
+rcprofile = LibSSW.ssw_init(ireadrc, mat)
+align2     = LibSSW.ssw_align(rcprofile, iref, 3, 1, 1, 0, 0, 15)
+pp align2
+
 ```
 
 
