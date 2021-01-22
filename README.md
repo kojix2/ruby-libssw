@@ -7,8 +7,6 @@
 
 :checkered_flag: [libssw](https://github.com/mengyao/Complete-Striped-Smith-Waterman-Library) - fast SIMD parallelized implementation of the Smith-Waterman algorithm - for Ruby
 
-:construction: Under development.
-
 ## Installation
 
 ```ssh
@@ -75,7 +73,7 @@ pp align1.to_h
 # }
 
 profile2 = LibSSW.ssw_init(read_int2, mat)
-align2     = LibSSW.ssw_align(profile2, ref_int, 3, 1, 1, 0, 0, 15)
+align2   = LibSSW.ssw_align(profile2, ref_int, 3, 1, 1, 0, 0, 15)
 pp align2.to_h
 # {
 #  :score1       => 10,
@@ -106,7 +104,11 @@ bundle exec rake test
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/kojix2/ruby-libssw.
+* [Report bugs](https://github.com/kojix2/ruby-libssw/issues)
+* Fix bugs and [submit pull requests](https://github.com/kojix2/ruby-libssw/pulls)
+* Write, clarify, or fix documentation
+* English corrections are welcome
+* Suggest or add new features
 
 ## License
 
