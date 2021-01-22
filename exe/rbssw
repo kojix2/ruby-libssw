@@ -99,9 +99,9 @@ lScore = nil
 if opts[:bprotein]
   # load AA score matrix
   if !opts[:smatrix]
-    lEle = AAELEMENTS
-    dEle2Int = AA2INT
-    dInt2Ele = INT2AA
+    lEle = SSW::AAELEMENTS
+    dEle2Int = SSW::AA2INT
+    dInt2Ele = SSW::INT2AA
     nEleNum = lEle.size
     lScore = SSW::Blosum50
   else
@@ -109,26 +109,12 @@ if opts[:bprotein]
   end
 elsif !opts[:smatrix]
   # init DNA score matrix
-  lEle = DNAELEMENTS
-  dRc = DNARC
-  dEle2Int = DNA2INT
-  dInt2Ele = INT2DNA
+  lEle = SSW::DNAELEMENTS
+  dRc = SSW::DNARC
+  dEle2Int = SSW::DNA2INT
+  dInt2Ele = SSW::INT2DNA
   nEleNum = lEle.size # 5
-  lScore = Array.new(nEleNum**2, 0)
-  (nEleNum - 1).times do |i|
-    (nEleNum - 1).times do |j|
-      lScore[i * nEleNum + j] = if lEle[i] == lEle[j]
-                                  opts[:nmatch]
-                                else
-                                  -opts[:nmismatch]
-                                end
-    end
-  end
-  # lScore = [ 2, -2, -2, -2, 0,
-  #           -2,  2, -2, -2, 0,
-  #           -2, -2,  2, -2, 0,
-  #           -2, -2, -2,  2, 0,
-  #            0,  0,  0,  0, 0 ]
+  lScore = LibSSW.create_scoring_matrix(lEle, opts[:nmatch], -opts[:nmismatch])
 end
 
 warn 'Reverse complement alignment is not available for protein sequences.' if opts[:bbest] && opts[:bprotein]

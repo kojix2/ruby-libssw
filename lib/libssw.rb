@@ -245,5 +245,21 @@ module LibSSW
       end
       cigar_string
     end
+
+    # Create scoring matrix of Smith-Waterman algrithum.
+    # @param [Array] elements
+    # @match_score [Integer] match_score
+    # @mismatch_score [Integer] mismatch_score
+    def create_scoring_matrix(elements, match_score, mismatch_score)
+      size = elements.size
+      score = Array.new(size * size, 0)
+      (size - 1).times do |i|
+        (size - 1).times do |j|
+          score[i * size + j] = \
+            (elements[i] == elements[j] ? match_score : mismatch_score)
+        end
+      end
+      score
+    end
   end
 end

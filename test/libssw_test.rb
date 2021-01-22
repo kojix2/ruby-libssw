@@ -75,4 +75,19 @@ class LibsswTest < Minitest::Test
     assert_equal 1, align.cigar_len
     assert_equal '5M', align.cigar_string
   end
+
+  def test_create_scoring_matrix
+    mat1 = [2, -2, -2, -2, 0,
+            -2,  2, -2, -2, 0,
+            -2, -2,  2, -2, 0,
+            -2, -2, -2,  2, 0,
+            0, 0, 0, 0, 0]
+    assert_equal mat1, LibSSW.create_scoring_matrix(LibSSW::DNAElements, 2, -2)
+    mat2 = [5, -3, -3, -3, 0,
+            -3, 5, -3, -3, 0,
+            -3, -3, 5, -3, 0,
+            -3, -3, -3, 5, 0,
+            0, 0, 0, 0, 0]
+    assert_equal mat2, LibSSW.create_scoring_matrix(LibSSW::DNAElements, 5, -3)
+  end
 end
