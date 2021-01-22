@@ -7,6 +7,10 @@ class LibsswTest < Minitest::Test
     refute_nil LibSSW::VERSION
   end
 
+  # def test_instance_variable_func_map_available
+  #   refute_nil LibSSW::FFI.instance_variable_get(:@func_map)
+  # end
+
   def test_align_struct_malloc
     assert_instance_of LibSSW::FFI::Align, (ptr = LibSSW::FFI::Align.malloc)
     assert_instance_of LibSSW::Align, LibSSW::Align.new(ptr)
@@ -50,7 +54,7 @@ class LibsswTest < Minitest::Test
     n = 5
     mat = Array.new(n * n) { [-2, -1, 0, 1, 2].sample }
     profile = LibSSW.ssw_init(read, mat, n)
-    assert_nil LibSSW.init_destroy(profile)
+    assert_nil LibSSW.init_destroy(profile.to_ptr)
   end
 
   def test_ssw_align

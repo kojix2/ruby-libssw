@@ -113,6 +113,11 @@ module LibSSW
         score_size
       )
       # Garbage collection workaround
+      #
+      # * The following code will cause a segmentation violation when manually
+      #   releasing memory. The reason is unknown.
+      # * func_map is only available in newer versions of fiddle.
+      # ptr.free = FFI.instance_variable_get(:@func_map)['init_destroy']
       ptr.instance_variable_set(:@read_str,   read_str)
       ptr.instance_variable_set(:@read_len,   read_len)
       ptr.instance_variable_set(:@mat_str,    mat_str)
@@ -183,6 +188,8 @@ module LibSSW
       # Not sure yet if we should set the instance variable to the pointer as a
       # garbage collection workaround.
       # For example: instance_variable_set(:@ref_str, ref_str)
+      #
+      # ptr.free = FFI.instance_variable_get(:@func_map)['align_destroy']
       LibSSW::Align.new(ptr)
     end
 
@@ -251,7 +258,8 @@ module LibSSW
 
     # @param [String] seq
     def dna_to_int_array(seq)
-      raise ArgumentError, "seq must be a string" unless seq.is_a? String
+      raise ArgumentError, 'seq must be a string' unless seq.is_a? String
+
       seq.each_char.map do |base|
         DNA2INT[base] || DNA2INT['N']
       end
@@ -259,7 +267,8 @@ module LibSSW
 
     # @param [Array] int array
     def int_array_to_dna(arr)
-      raise ArgumentError, "arr must be an Array" unless arr.is_a? Array
+      raise ArgumentError, 'arr must be an Array' unless arr.is_a? Array
+
       arr.map do |i|
         INT2DNA[i] || 'N'
       end.join
