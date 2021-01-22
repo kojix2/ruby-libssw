@@ -27,6 +27,11 @@ module LibSSW
 
     def to_ptr
       # Garbage collection warkaround
+      # Preventing Garbage Collection --force
+      cstruct.read    = ptr.instance_variable_get(:@read_str)
+      cstruct.mat     = ptr.instance_variable_get(:@mat_str)
+      cstruct.readLen = ptr.instance_variable_get(:@read_len)
+      cstruct.n       = ptr.instance_variable_get(:@n)
       ptr
     end
 

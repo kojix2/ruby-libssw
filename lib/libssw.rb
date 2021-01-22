@@ -112,27 +112,14 @@ module LibSSW
         n,
         score_size
       )
-      profile = LibSSW::Profile.new(ptr)
-      # Check Garbage Collection
-      %i[read read_len mat n].zip([read, read_len, mat, n]).each do |name, obj|
-        next unless profile.public_send(name) != obj
+      # Garbage collection workaround
+      ptr.instance_variable_set(:@read_str,   read_str)
+      ptr.instance_variable_set(:@read_len,   read_len)
+      ptr.instance_variable_set(:@mat_str,    mat_str)
+      ptr.instance_variable_set(:@n,          n)
+      ptr.instance_variable_set(:@score_size, score_size)
 
-        warn "[Error] Struct member: '#{name}'"
-        warn "        * expected value: #{obj}"
-        warn "        *   actual value: #{profile.public_send(name)}"
-        warn "        This may have been caused by Ruby'S GC."
-      end
-      # Preventing Garbage Collection --force
-      cstruct         = profile.cstruct
-      cstruct.read    = read_str
-      cstruct.mat     = mat_str
-      cstruct.readLen = read_len
-      cstruct.n       = n
-      ptr.instance_variable_set(:@read_str, read_str)
-      ptr.instance_variable_set(:@read_len, read_len)
-      ptr.instance_variable_set(:@mat_str,  mat_str)
-      ptr.instance_variable_set(:@n,        n)
-      profile
+      LibSSW::Profile.new(ptr)
     end
 
     # Release the memory allocated by function ssw_init.
