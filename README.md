@@ -39,15 +39,15 @@ require 'libssw'
 
 SSW = LibSSW
 
-sref  = "AAAAAAAAACGTTAAAAAAAAAA"
-iref  = SSW.dna_to_int_array(sref) 
+ref_str  = "AAAAAAAAACGTTAAAAAAAAAA"
+ref_int  = SSW.dna_to_int_array(sref) 
 # [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-sread = "ACGTT"
-sreadrc = SSW.dna_complement(sread)
-iread = SSW.dna_to_int_array(sread)
+read_str1 = "ACGTT"
+read_str2 = SSW.dna_complement(read_str)
+read_int1 = SSW.dna_to_int_array(read_str1)
 # [0, 1, 2, 3, 3]
-ireadrc = SSW.dna_to_int_array(sreadc)
+read_int2 = SSW.dna_to_int_array(read_str2)
 # [0, 0, 1, 2, 3]
 
 mat = SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
