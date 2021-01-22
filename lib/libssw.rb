@@ -77,14 +77,16 @@ module LibSSW
   INT2DNA = { 0 => 'A', 1 => 'C', 2 => 'G', 3 => 'T', 4 => 'N' }
 
   # reverse complement
-  DNARC = { 'A': 'C',
-            'C': 'G',
-            'G': 'C',
-            'T': 'A',
-            'a': 'C',
-            'c': 'G',
-            'g': 'C',
-            't': 'A' }
+  DNARC = { 'A' => 'T',
+            'C' => 'G',
+            'G' => 'C',
+            'T' => 'A',
+            'N' => 'N',
+            'a' => 'T',
+            'c' => 'G',
+            'g' => 'C',
+            't' => 'A',
+            'n' => 'N' }
 
   class << self
     # Create the query profile using the query sequence.
@@ -277,6 +279,22 @@ module LibSSW
 
       arr.map do |i|
         INT2DNA[i] || 'N'
+      end.join
+    end
+
+    def aaseq_to_int_array(seq)
+      raise ArgumentError, 'seq must be a string' unless seq.is_a? String
+
+      seq.each_char.map do |base|
+        AA2INT[base] || AA2INT['*']
+      end
+    end
+
+    def int_array_to_aaseq(arr)
+      raise ArgumentError, 'arr must be an Array' unless arr.is_a? Array
+
+      arr.map do |i|
+        INT2AA[i] || '*'
       end.join
     end
   end

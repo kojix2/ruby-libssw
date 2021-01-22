@@ -114,4 +114,16 @@ class LibsswTest < Minitest::Test
     r = "NTCGATCGA"
     assert_equal r, LibSSW.dna_complement(s)
   end
+
+  def test_aaseq_to_int_array
+    aa_seq = "ACDEFGHIKLMNPQRSTVWYU*"
+    arr = [0, 4, 3, 6, 13, 7, 8, 9, 11, 10, 12, 2, 14, 5, 1, 15, 16, 19, 17, 18, 23, 23]
+    assert_equal arr, LibSSW.aaseq_to_int_array(aa_seq)
+  end
+
+  def test_int_array_to_aaseq
+    arr = [0, 4, 3, 6, 13, 7, 8, 9, 11, 10, 12, 2, 14, 5, 1, 15, 16, 19, 17, 18, 23, 28]
+    aa_seq = "ACDEFGHIKLMNPQRSTVWY**"
+    assert_equal aa_seq, LibSSW.int_array_to_aaseq(arr)
+  end
 end
