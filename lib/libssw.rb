@@ -265,6 +265,12 @@ module LibSSW
       end
     end
 
+    def dna_complement(seq)
+      seq.each_char.map do |base|
+        DNARC[base]
+      end.join.reverse
+    end
+
     # @param [Array] int array
     def int_array_to_dna(arr)
       raise ArgumentError, 'arr must be an Array' unless arr.is_a? Array

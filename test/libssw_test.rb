@@ -108,4 +108,10 @@ class LibsswTest < Minitest::Test
     assert_equal seq, LibSSW.int_array_to_dna(int)
     assert_equal seq.reverse, LibSSW.int_array_to_dna(int.reverse)
   end
+
+  def test_dna_complement
+    s = "TCGAtcgaN"
+    r = "NTCGATCGA"
+    assert_equal r, LibSSW.dna_complement(s)
+  end
 end
