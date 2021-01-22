@@ -57,8 +57,8 @@ mat = SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
 #       -2, -2, -2,  2,  0,
 #        0,  0,  0,  0,  0]
 
-profile = LibSSW.ssw_init(iread, mat)
-align1   = LibSSW.ssw_align(profile, iref, 3, 1, 1, 0, 0, 15)
+profile1 = LibSSW.ssw_init(iread, mat)
+align1   = LibSSW.ssw_align(profile1, iref, 3, 1, 1, 0, 0, 15)
 pp align.to_h
 # {
 #  :score1       => 10,
@@ -73,8 +73,8 @@ pp align.to_h
 #  :cigar_string => "5M"
 # }
 
-rcprofile = LibSSW.ssw_init(ireadrc, mat)
-align2     = LibSSW.ssw_align(rcprofile, iref, 3, 1, 1, 0, 0, 15)
+profile2 = LibSSW.ssw_init(ireadrc, mat)
+align2     = LibSSW.ssw_align(profile2, iref, 3, 1, 1, 0, 0, 15)
 pp align2
 
 ```
