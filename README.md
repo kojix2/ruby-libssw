@@ -36,8 +36,6 @@ bundle exec rake install
 ```ruby
 require 'libssw'
 
-SSW = LibSSW
-
 ref_str  = "AAAAAAAAACGTTAAAAAAAAAA"
 ref_int  = SSW.dna_to_int_array(ref_str) 
 # [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
