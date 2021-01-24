@@ -211,6 +211,7 @@ module SSW
       end
       score
     end
+
     # TODO: fix variable names
     def build_path(q_seq, r_seq, align)
       sQ = ''
@@ -224,20 +225,20 @@ module SSW
         c = m > 8 ? 'M' : 'MIDNSHP=X'[m]
         case c
         when 'M'
-          sQ += q_seq[q_off...(q_off+n)]
-          sA += Array.new(n){|j| q_seq[q_off+j] == r_seq[r_off+j] ? '|' : '*'}.join
-          sR += r_seq[r_off...(r_off+n)]
+          sQ += q_seq[q_off...(q_off + n)]
+          sA += Array.new(n) { |j| q_seq[q_off + j] == r_seq[r_off + j] ? '|' : '*' }.join
+          sR += r_seq[r_off...(r_off + n)]
           q_off += n
           r_off += n
         when 'I'
-          sQ += q_seq[q_off...(q_off+n)]
+          sQ += q_seq[q_off...(q_off + n)]
           sA += ' ' * n
           sR += ' ' * n
           q_off += n
         when 'D'
           sQ += ' ' * n
           sA += ' ' * n
-          sR += r_seq[r_off...(r_off+n)]
+          sR += r_seq[r_off...(r_off + n)]
           r_off += n
         end
       end

@@ -61,7 +61,7 @@ module SSW
     end
 
     private
-    
+
     def array_to_cigar_string(arr)
       cigar_string = String.new
       arr.each do |x|
