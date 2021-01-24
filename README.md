@@ -37,18 +37,18 @@ bundle exec rake install
 require 'libssw'
 
 ref_str  = "AAAAAAAAACGTTAAAAAAAAAA"
-ref_int  = SSW.dna_to_int_array(ref_str) 
+ref_int  = SSW::DNA.to_int_array(ref_str) 
 # [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 read_str1 = "ACGTT"
-read_str2 = SSW.dna_complement(read_str1)
+read_str2 = SSW::DNA.complement(read_str1)
 # "AACGT"
-read_int1 = SSW.dna_to_int_array(read_str1)
+read_int1 = SSW::DNA.to_int_array(read_str1)
 # [0, 1, 2, 3, 3]
-read_int2 = SSW.dna_to_int_array(read_str2)
+read_int2 = SSW::DNA.to_int_array(read_str2)
 # [0, 0, 1, 2, 3]
 
-mat = SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
+mat = SSW.create_scoring_matrix(SSW::DNA::Elements, 2, -2)
 # mat = [2, -2, -2, -2,  0,
 #       -2,  2, -2, -2,  0,
 #       -2, -2,  2, -2,  0,

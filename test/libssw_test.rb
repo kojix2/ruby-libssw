@@ -109,44 +109,44 @@ class LibsswTest < Minitest::Test
             -2, -2,  2, -2, 0,
             -2, -2, -2,  2, 0,
             0, 0, 0, 0, 0]
-    assert_equal mat1, SSW.create_scoring_matrix(SSW::DNAElements, 2, -2)
+    assert_equal mat1, SSW.create_scoring_matrix(SSW::DNA::Elements, 2, -2)
     mat2 = [5, -3, -3, -3, 0,
             -3, 5, -3, -3, 0,
             -3, -3, 5, -3, 0,
             -3, -3, -3, 5, 0,
             0, 0, 0, 0, 0]
-    assert_equal mat2, SSW.create_scoring_matrix(SSW::DNAElements, 5, -3)
+    assert_equal mat2, SSW.create_scoring_matrix(SSW::DNA::Elements, 5, -3)
   end
 
   def test_dna_to_int_array
     seq = 'TCGATCGATCGANNNNM'
     int = [3, 1, 2, 0, 3, 1, 2, 0, 3, 1, 2, 0, 4, 4, 4, 4, 4]
-    assert_equal int, SSW.dna_to_int_array(seq)
-    assert_equal int.reverse, SSW.dna_to_int_array(seq.reverse)
+    assert_equal int, SSW::DNA.to_int_array(seq)
+    assert_equal int.reverse, SSW::DNA.to_int_array(seq.reverse)
   end
 
   def test_int_array_to_dna
     int = [3, 1, 2, 0, 3, 1, 2, 0, 3, 1, 2, 0, 4, 4, 4, 4, 5]
     seq = 'TCGATCGATCGANNNNN'
-    assert_equal seq, SSW.int_array_to_dna(int)
-    assert_equal seq.reverse, SSW.int_array_to_dna(int.reverse)
+    assert_equal seq, SSW::DNA.from_int_array(int)
+    assert_equal seq.reverse, SSW::DNA.from_int_array(int.reverse)
   end
 
   def test_dna_complement
     s = 'TCGAtcgaN'
     r = 'NTCGATCGA'
-    assert_equal r, SSW.dna_complement(s)
+    assert_equal r, SSW::DNA.complement(s)
   end
 
   def test_aaseq_to_int_array
     aa_seq = 'ACDEFGHIKLMNPQRSTVWYU*'
     arr = [0, 4, 3, 6, 13, 7, 8, 9, 11, 10, 12, 2, 14, 5, 1, 15, 16, 19, 17, 18, 23, 23]
-    assert_equal arr, SSW.aaseq_to_int_array(aa_seq)
+    assert_equal arr, SSW::AASeq.to_int_array(aa_seq)
   end
 
   def test_int_array_to_aaseq
     arr = [0, 4, 3, 6, 13, 7, 8, 9, 11, 10, 12, 2, 14, 5, 1, 15, 16, 19, 17, 18, 23, 28]
     aa_seq = 'ACDEFGHIKLMNPQRSTVWY**'
-    assert_equal aa_seq, SSW.int_array_to_aaseq(arr)
+    assert_equal aa_seq, SSW::AASeq.from_int_array(arr)
   end
 end
