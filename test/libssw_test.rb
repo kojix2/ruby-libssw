@@ -103,6 +103,40 @@ class LibsswTest < Minitest::Test
     assert_equal '', align.cigar_string
   end
 
+  def test_build_path
+    ref_str  = 'AAAAAAAAACGTTAAAAAAAAAA'
+    ref_int  = SSW::DNA.to_int_array(ref_str)
+    read_str = 'ACGTT'
+    read_int = SSW::DNA.to_int_array(read_str)
+    n = 5
+    mat = [2, -2, -2, -2, 0,
+           -2,  2, -2, -2,  0,
+           -2, -2,  2, -2,  0,
+           -2, -2, -2,  2,  0,
+           0, 0, 0, 0, 0]
+    profile = SSW.init(read_int, mat)
+    align = SSW.align(profile, ref_int, 3, 1, 1, 0, 0)
+    assert_equal ['5M', 'ACGTT', '|||||', 'ACGTT'],
+                 SSW.build_path(read_str, ref_str, align)
+  end
+
+  def test_build_path2
+    ref_str  = 'GGTGGTATACAANTTNAGNNGTTGGTCNACCAATAGCAGTGGGCATGCTNNGAATAATACTTACCCTATNGCGATNTCCTTACACTGGTAAAGAATGTCTT'
+    ref_int  = SSW::DNA.to_int_array(ref_str)
+    read_str = 'CTCTTAGGCCCGCAGTTTCC'
+    read_int = SSW::DNA.to_int_array(read_str)
+    n = 5
+    mat = [2, -2, -2, -2, 0,
+           -2,  2, -2, -2,  0,
+           -2, -2,  2, -2,  0,
+           -2, -2, -2,  2,  0,
+           0, 0, 0, 0, 0]
+    profile = SSW.init(read_int, mat)
+    align = SSW.align(profile, ref_int, 3, 1, 1, 0, 0)
+    assert_equal ['4M2I3M4D9M', 'CTTAGGCCC    GCAGTTTCC', '||||  |||    ||**|*|||', 'CTTA  CCCTATNGCGATNTCC'],
+                 SSW.build_path(read_str, ref_str, align)
+  end
+
   def test_create_scoring_matrix
     mat1 = [2, -2, -2, -2, 0,
             -2,  2, -2, -2, 0,
