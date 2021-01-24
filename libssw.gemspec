@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/libssw/version'
+require_relative 'lib/ssw/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'libssw'
-  spec.version       = LibSSW::VERSION
+  spec.version       = SSW::VERSION
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
 

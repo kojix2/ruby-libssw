@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'libssw/version'
-require_relative 'libssw/BLOSUM50'
-require_relative 'libssw/BLOSUM62'
+require_relative 'ssw/version'
+require_relative 'ssw/BLOSUM50'
+require_relative 'ssw/BLOSUM62'
 
-module LibSSW
+module SSW
   class Error < StandardError; end
 
   class << self
@@ -26,9 +26,9 @@ module LibSSW
                    File.expand_path("../vendor/#{lib_name}", __dir__)
                  end
 
-  require_relative 'libssw/ffi'
-  require_relative 'libssw/profile'
-  require_relative 'libssw/align'
+  require_relative 'ssw/ffi'
+  require_relative 'ssw/profile'
+  require_relative 'ssw/align'
 
   AAELEMENTS = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G',
                 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S',
@@ -130,11 +130,11 @@ module LibSSW
       ptr.instance_variable_set(:@n,          n)
       ptr.instance_variable_set(:@score_size, score_size)
 
-      LibSSW::Profile.new(ptr)
+      SSW::Profile.new(ptr)
     end
 
     # Release the memory allocated by function ssw_init.
-    # @param p [Fiddle::Pointer, LibSSW::Profile, LibSSW::FFI::Profile]
+    # @param p [Fiddle::Pointer, SSW::Profile, SSW::FFI::Profile]
     #   pointer to the query profile structure
     # @note Ruby has garbage collection, so there is not much reason to call
     #   this method.
@@ -147,7 +147,7 @@ module LibSSW
     end
 
     # Do Striped Smith-Waterman alignment.
-    # @param prof [Fiddle::Pointer, LibSSW::Profile, LibSSW::FFI::Profile]
+    # @param prof [Fiddle::Pointer, SSW::Profile, SSW::FFI::Profile]
     #   pointer to the query profile structure
     # @param ref [Array]
     #   target sequence;
@@ -206,11 +206,11 @@ module LibSSW
       # For example: instance_variable_set(:@ref_str, ref_str)
       #
       # ptr.free = FFI.instance_variable_get(:@func_map)['align_destroy']
-      LibSSW::Align.new(ptr)
+      SSW::Align.new(ptr)
     end
 
     # Release the memory allocated by function ssw_align.
-    # @param a [Fiddle::Pointer, LibSSW::Align, LibSSW::FFI::Align]
+    # @param a [Fiddle::Pointer, SSW::Align, SSW::FFI::Align]
     #   pointer to the alignment result structure
     def align_destroy(align)
       if align.is_a?(Align)

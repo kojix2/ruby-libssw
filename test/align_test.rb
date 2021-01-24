@@ -4,8 +4,8 @@ require_relative 'test_helper'
 
 class AlignTest < Minitest::Test
   def setup
-    ptr = LibSSW::FFI::Align.malloc
-    @align = LibSSW::Align.new(ptr)
+    ptr = SSW::FFI::Align.malloc
+    @align = SSW::Align.new(ptr)
   end
 
   def test_keys
@@ -20,7 +20,7 @@ class AlignTest < Minitest::Test
          cigar
          cigar_len
          cigar_string],
-      LibSSW::Align.keys
+      SSW::Align.keys
   end
 
   def test_score1
@@ -60,7 +60,7 @@ class AlignTest < Minitest::Test
   end
 
   def test_to_h
-    assert_equal LibSSW::Align.keys, @align.to_h.keys
+    assert_equal SSW::Align.keys, @align.to_h.keys
     assert_equal [0, 0, 0, 0, 0, 0, 0, [], 0, ''], @align.to_h.values
   end
 end

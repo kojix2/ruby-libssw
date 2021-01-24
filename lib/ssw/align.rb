@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LibSSW
+module SSW
   # structure of the alignment result
   # @!attribute score1
   #   @return [Integer] the best alignment score
@@ -52,8 +52,8 @@ module LibSSW
       @cigar_len    = align.cigarLen
       @cigar        = cigar_len.positive? ? align.cigar[0, 4 * cigar_len].unpack('L*') : []
       # Attributes for ruby binding only
-      @cigar_string = LibSSW.array_to_cigar_string(@cigar)
-      LibSSW.align_destroy(ptr)
+      @cigar_string = SSW.array_to_cigar_string(@cigar)
+      SSW.align_destroy(ptr)
     end
 
     def to_h

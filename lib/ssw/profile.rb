@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LibSSW
+module SSW
   # structure of the query profile/usr/lib/x86_64-linux-gnu/
   # @!attribute read
   # @!attribute mat
@@ -17,7 +17,7 @@ module LibSSW
 
     def initialize(ptr)
       @ptr      = ptr
-      @cstruct  = profile = LibSSW::FFI::Profile.new(ptr)
+      @cstruct  = profile = SSW::FFI::Profile.new(ptr)
       @read_len = profile.readLen
       @read     = read_len.positive? ? profile.read[0, read_len].unpack('c*') : []
       @n        = profile.n

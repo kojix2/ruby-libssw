@@ -2,12 +2,12 @@
 
 require 'fiddle/import'
 
-module LibSSW
+module SSW
   module FFI
     extend Fiddle::Importer
 
     begin
-      dlload LibSSW.ffi_lib
+      dlload SSW.ffi_lib
     rescue LoadError => e
       raise LoadError, "Could not find libssw shared library. \n#{e}"
     end

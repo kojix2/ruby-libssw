@@ -4,8 +4,8 @@ require_relative 'test_helper'
 
 class ProfileTest < Minitest::Test
   def setup
-    ptr = LibSSW::FFI::Profile.malloc
-    @profile = LibSSW::Profile.new(ptr)
+    ptr = SSW::FFI::Profile.malloc
+    @profile = SSW::Profile.new(ptr)
   end
 
   def test_keys
@@ -15,7 +15,7 @@ class ProfileTest < Minitest::Test
          read_len
          n
          bias],
-      LibSSW::Profile.keys
+      SSW::Profile.keys
   end
 
   def test_read
@@ -39,7 +39,7 @@ class ProfileTest < Minitest::Test
   end
 
   def test_to_h
-    assert_equal LibSSW::Profile.keys, @profile.to_h.keys
+    assert_equal SSW::Profile.keys, @profile.to_h.keys
     assert_equal [[], [], 0, 0, 0], @profile.to_h.values
   end
 end
