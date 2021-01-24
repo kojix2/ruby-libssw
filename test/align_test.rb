@@ -63,4 +63,8 @@ class AlignTest < Minitest::Test
     assert_equal SSW::Align.keys, @align.to_h.keys
     assert_equal [0, 0, 0, 0, 0, 0, 0, [], 0, ''], @align.to_h.values
   end
+
+  def test_array_to_cigar_string
+    assert_equal '5M', @align.send(:array_to_cigar_string, [80])
+  end
 end

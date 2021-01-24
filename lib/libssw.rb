@@ -43,7 +43,7 @@ module SSW
     #   * if your estimated best alignment score is surely < 255 please set 0;
     #   * if your estimated best alignment score >= 255, please set 1;
     #   * if you don't know, please set 2
-    def ssw_init(read, mat, n = nil, score_size: 2)
+    def init(read, mat, n = nil, score_size: 2)
       read = read.to_a
       mat = mat.to_a.flatten
       raise ArgumentError, 'Expect class of read to be Array' unless read.is_a?(Array)
@@ -133,7 +133,7 @@ module SSW
     #   SSW C library masks the reference loci nearby (mask length = maskLen)
     #   the best alignment ending position and locates the second largest score
     #   from the unmasked elements.
-    def ssw_align(prof, ref, weight_gap0, weight_gapE, flag, filters, filterd, mask_len = nil)
+    def align(prof, ref, weight_gap0, weight_gapE, flag, filters, filterd, mask_len = nil)
       unless prof.is_a?(Fiddle::Pointer) || prof.is_a?(Profile) || prof.respond_to?(:to_ptr)
         raise ArgumentError, 'Expect class of filename to be Profile or Pointer'
       end
@@ -194,17 +194,6 @@ module SSW
       FFI.mark_mismatch(
         ref_begin1, read_begin1, read_end1, ref.pack('c*'), read.pack('c*'), read_len, cigar, cigar_len.pack('l*')
       )
-    end
-
-    def array_to_cigar_string(arr)
-      cigar_string = String.new
-      arr.each do |x|
-        n = x >> 4
-        m = x & 15
-        c = m > 8 ? 'M' : 'MIDNSHP=X'[m]
-        cigar_string << n.to_s << c
-      end
-      cigar_string
     end
 
     # Create scoring matrix of Smith-Waterman algrithum.

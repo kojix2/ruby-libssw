@@ -26,7 +26,7 @@ class LibsswTest < Minitest::Test
     read_len = read.size
     n = 5
     mat = Array.new(n * n) { [-2, -1, 0, 1, 2].sample }
-    profile = SSW.ssw_init(read, mat, n)
+    profile = SSW.init(read, mat, n)
     assert_instance_of SSW::Profile, profile
     assert_equal read, profile.read
     assert_equal mat, profile.mat
@@ -40,7 +40,7 @@ class LibsswTest < Minitest::Test
     read_len = read.size
     n = 7
     mat = Array.new(n * n) { [-3, -2, -1, 0, 1, 2, 3].sample }
-    profile = SSW.ssw_init(read, mat, n, score_size: 2)
+    profile = SSW.init(read, mat, n, score_size: 2)
     assert_instance_of SSW::Profile, profile
     assert_equal read, profile.read
     assert_equal mat, profile.mat
@@ -53,7 +53,7 @@ class LibsswTest < Minitest::Test
     read = Array.new(100) { [0, 1, 2, 3, 4].sample }
     n = 5
     mat = Array.new(n * n) { [-2, -1, 0, 1, 2].sample }
-    profile = SSW.ssw_init(read, mat, n)
+    profile = SSW.init(read, mat, n)
     assert_nil SSW.init_destroy(profile.to_ptr)
   end
 
@@ -66,8 +66,8 @@ class LibsswTest < Minitest::Test
            -2, -2,  2, -2,  0,
            -2, -2, -2,  2,  0,
            0, 0, 0, 0, 0]
-    profile = SSW.ssw_init(read, mat, n, score_size: 2)
-    align = SSW.ssw_align(profile, ref, 3, 1, 1, 0, 0, 15)
+    profile = SSW.init(read, mat, n, score_size: 2)
+    align = SSW.align(profile, ref, 3, 1, 1, 0, 0, 15)
     assert_equal 10, align.score1
     assert_equal 3, align.score2
     assert_equal 9, align.ref_begin1
@@ -89,8 +89,8 @@ class LibsswTest < Minitest::Test
            -2, -2,  2, -2,  0,
            -2, -2, -2,  2,  0,
            0, 0, 0, 0, 0]
-    profile = SSW.ssw_init(read, mat, n, score_size: 2)
-    align = SSW.ssw_align(profile, ref, 3, 1, 0, 0, 0) # flag 0, omit mask len
+    profile = SSW.init(read, mat, n, score_size: 2)
+    align = SSW.align(profile, ref, 3, 1, 0, 0, 0) # flag 0, omit mask len
     assert_equal 10, align.score1
     assert_equal 3, align.score2
     assert_equal(-1, align.ref_begin1)

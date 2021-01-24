@@ -52,12 +52,25 @@ module SSW
       @cigar_len    = align.cigarLen
       @cigar        = cigar_len.positive? ? align.cigar[0, 4 * cigar_len].unpack('L*') : []
       # Attributes for ruby binding only
-      @cigar_string = SSW.array_to_cigar_string(@cigar)
+      @cigar_string = array_to_cigar_string(@cigar)
       SSW.align_destroy(ptr)
     end
 
     def to_h
       self.class.keys.map { |k| [k, __send__(k)] }.to_h
+    end
+
+    private
+    
+    def array_to_cigar_string(arr)
+      cigar_string = String.new
+      arr.each do |x|
+        n = x >> 4
+        m = x & 15
+        c = m > 8 ? 'M' : 'MIDNSHP=X'[m]
+        cigar_string << n.to_s << c
+      end
+      cigar_string
     end
   end
 end
