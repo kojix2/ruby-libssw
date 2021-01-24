@@ -225,7 +225,6 @@ module SSW
         case c
         when 'M'
           sQ += q_seq[q_off...(q_off+n)]
-          p q_seq
           sA += Array.new(n){|j| q_seq[q_off+j] == r_seq[r_off+j] ? '|' : '*'}.join
           sR += r_seq[r_off...(r_off+n)]
           q_off += n

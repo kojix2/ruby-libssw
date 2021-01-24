@@ -89,7 +89,7 @@ class LibsswTest < Minitest::Test
            -2, -2,  2, -2,  0,
            -2, -2, -2,  2,  0,
            0, 0, 0, 0, 0]
-    profile = SSW.init(read, mat, n, score_size: 2)
+    profile = SSW.init(read, mat, score_size: 2)
     align = SSW.align(profile, ref, 3, 1, 0, 0, 0) # flag 0, omit mask len
     assert_equal 10, align.score1
     assert_equal 3, align.score2
