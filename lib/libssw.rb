@@ -211,5 +211,38 @@ module SSW
       end
       score
     end
+    # TODO: fix variable names
+    def build_path(q_seq, r_seq, align)
+      sQ = ''
+      sA = ''
+      sR = ''
+      q_off = align.read_begin1
+      r_off = align.ref_begin1
+      align.cigar.each do |x|
+        n = x >> 4
+        m = x & 15
+        c = m > 8 ? 'M' : 'MIDNSHP=X'[m]
+        case c
+        when 'M'
+          sQ += q_seq[q_off...(q_off+n)]
+          p q_seq
+          sA += Array.new(n){|j| q_seq[q_off+j] == r_seq[r_off+j] ? '|' : '*'}.join
+          sR += r_seq[r_off...(r_off+n)]
+          q_off += n
+          r_off += n
+        when 'I'
+          sQ += q_seq[q_off...(q_off+n)]
+          sA += ' ' * n
+          sR += ' ' * n
+          q_off += n
+        when 'D'
+          sQ += ' ' * n
+          sA += ' ' * n
+          sR += r_seq[r_off...(r_off+n)]
+          r_off += n
+        end
+      end
+      [align.cigar_string, sQ, sA, sR]
+    end
   end
 end
