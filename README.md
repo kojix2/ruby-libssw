@@ -86,6 +86,12 @@ pp align2.to_h
 #  :cigar_len    => 1,
 #  :cigar_string => "5M"
 # }
+
+puts SSW.build_path(read_str1, ref_str, align1)
+# 5M
+# ACGTT
+# |||||
+# ACGTT
 ```
 
 
