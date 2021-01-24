@@ -100,9 +100,13 @@ module LibSSW
     #   * if your estimated best alignment score >= 255, please set 1;
     #   * if you don't know, please set 2
     def ssw_init(read, mat, n = nil, score_size: 2)
+      read = read.to_a
+      mat = mat.to_a.flatten
+      raise ArgumentError, 'Expect class of read to be Array' unless read.is_a?(Array)
+      raise ArgumentError, 'Expect class of mat to be Array' unless mat.is_a?(Array)
+
       read_str = read.pack('c*')
       read_len = read.size
-      mat = mat.to_a.flatten
       n = Math.sqrt(mat.size) if n.nil?
       raise "Not a square matrix. size: #{mat.size}, n: #{n}" if mat.size != n * n
 
@@ -135,6 +139,9 @@ module LibSSW
     # @note Ruby has garbage collection, so there is not much reason to call
     #   this method.
     def init_destroy(profile)
+      unless profile.is_a?(Fiddle::Pointer) || prof.is_a?(Profile) || prof.respond_to?(:to_ptr)
+        raise ArgumentError, 'Expect class of filename to be Profile or Pointer'
+      end
       FFI.init_destroy(profile)
     end
 
@@ -182,6 +189,11 @@ module LibSSW
     #   the best alignment ending position and locates the second largest score
     #   from the unmasked elements.
     def ssw_align(prof, ref, weight_gap0, weight_gapE, flag, filters, filterd, mask_len = nil)
+      unless prof.is_a?(Fiddle::Pointer) || prof.is_a?(Profile) || prof.respond_to?(:to_ptr)
+        raise ArgumentError, 'Expect class of filename to be Profile or Pointer'
+      end
+      raise ArgumentError, 'Expect class of ref to be Array' unless ref.is_a?(Array)
+
       ref_str = ref.pack('c*')
       ref_len = ref.size
       mask_len ||= [ref_len / 2, 15].max
@@ -200,7 +212,14 @@ module LibSSW
     # @param a [Fiddle::Pointer, LibSSW::Align, LibSSW::FFI::Align]
     #   pointer to the alignment result structure
     def align_destroy(align)
-      FFI.align_destroy(align)
+      if align.is_a?(Align)
+        warn "You don't need to call this method for Ruby's Align class."
+        return
+      elsif align.is_a?(Fiddle::Pointer) || align.respond_to?(:to_ptr)
+        FFI.align_destroy(align)
+      else
+        raise ArgumentError, 'Expect class of filename to be Pointer'
+      end
     end
 
     # 1. Calculate the number of mismatches.
