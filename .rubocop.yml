@@ -6,5 +6,5 @@ Style/PreferredHashMethods:
 
 AllCops:
   Exclude:
-    - lib/libssw/BLOSUM50.rb
-    - lib/libssw/BLOSUM62.rb
+    - lib/ssw/BLOSUM50.rb
+    - lib/ssw/BLOSUM62.rb
