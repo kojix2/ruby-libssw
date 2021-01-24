@@ -32,7 +32,7 @@ module LibSSW
 
   AAELEMENTS = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G',
                 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S',
-                'T', 'W', 'Y', 'V', 'B', 'Z', 'X', '*']
+                'T', 'W', 'Y', 'V', 'B', 'Z', 'X', '*'].freeze
 
   AA2INT = { 'A' => 0,  'a' => 0,
              'R' => 1,  'r' => 1,
@@ -57,24 +57,24 @@ module LibSSW
              'B' => 20, 'b' => 20,
              'Z' => 21, 'z' => 21,
              'X' => 22, 'x' => 22,
-             '*' => 23 }
+             '*' => 23 }.freeze
 
   INT2AA = { 0 => 'A', 1 => 'R', 2 => 'N', 3 => 'D',
              4 => 'C', 5 => 'Q', 6 => 'E', 7 => 'G',
              8 => 'H', 9 => 'I', 10 => 'L', 11 => 'K',
              12 => 'M', 13 => 'F', 14 => 'P', 15 => 'S',
              16 => 'T', 17 => 'W', 18 => 'Y', 19 => 'V',
-             20 => 'B', 21 => 'Z', 22 => 'X', 23 => '*' }
+             20 => 'B', 21 => 'Z', 22 => 'X', 23 => '*' }.freeze
 
-  DNAElements = %w[A C G T N]
+  DNAElements = %w[A C G T N].freeze
 
   DNA2INT = { 'A' => 0, 'a' => 0,
               'C' => 1, 'c' => 1,
               'G' => 2, 'g' => 2,
               'T' => 3, 't' => 3,
-              'N' => 4, 'n' => 4 }
+              'N' => 4, 'n' => 4 }.freeze
 
-  INT2DNA = { 0 => 'A', 1 => 'C', 2 => 'G', 3 => 'T', 4 => 'N' }
+  INT2DNA = { 0 => 'A', 1 => 'C', 2 => 'G', 3 => 'T', 4 => 'N' }.freeze
 
   # reverse complement
   DNARC = { 'A' => 'T',
@@ -86,7 +86,7 @@ module LibSSW
             'c' => 'G',
             'g' => 'C',
             't' => 'A',
-            'n' => 'N' }
+            'n' => 'N' }.freeze
 
   class << self
     # Create the query profile using the query sequence.
@@ -142,6 +142,7 @@ module LibSSW
       unless profile.is_a?(Fiddle::Pointer) || prof.is_a?(Profile) || prof.respond_to?(:to_ptr)
         raise ArgumentError, 'Expect class of filename to be Profile or Pointer'
       end
+
       FFI.init_destroy(profile)
     end
 
@@ -214,7 +215,7 @@ module LibSSW
     def align_destroy(align)
       if align.is_a?(Align)
         warn "You don't need to call this method for Ruby's Align class."
-        return
+        nil
       elsif align.is_a?(Fiddle::Pointer) || align.respond_to?(:to_ptr)
         FFI.align_destroy(align)
       else

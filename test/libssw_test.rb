@@ -93,9 +93,9 @@ class LibsswTest < Minitest::Test
     align = LibSSW.ssw_align(profile, ref, 3, 1, 0, 0, 0) # flag 0, omit mask len
     assert_equal 10, align.score1
     assert_equal 3, align.score2
-    assert_equal -1, align.ref_begin1
+    assert_equal(-1, align.ref_begin1)
     assert_equal 13, align.ref_end1
-    assert_equal -1, align.read_begin1
+    assert_equal(-1, align.read_begin1)
     assert_equal 4, align.read_end1
     assert_equal 29, align.ref_end2
     assert_equal [], align.cigar
@@ -133,20 +133,20 @@ class LibsswTest < Minitest::Test
   end
 
   def test_dna_complement
-    s = "TCGAtcgaN"
-    r = "NTCGATCGA"
+    s = 'TCGAtcgaN'
+    r = 'NTCGATCGA'
     assert_equal r, LibSSW.dna_complement(s)
   end
 
   def test_aaseq_to_int_array
-    aa_seq = "ACDEFGHIKLMNPQRSTVWYU*"
+    aa_seq = 'ACDEFGHIKLMNPQRSTVWYU*'
     arr = [0, 4, 3, 6, 13, 7, 8, 9, 11, 10, 12, 2, 14, 5, 1, 15, 16, 19, 17, 18, 23, 23]
     assert_equal arr, LibSSW.aaseq_to_int_array(aa_seq)
   end
 
   def test_int_array_to_aaseq
     arr = [0, 4, 3, 6, 13, 7, 8, 9, 11, 10, 12, 2, 14, 5, 1, 15, 16, 19, 17, 18, 23, 28]
-    aa_seq = "ACDEFGHIKLMNPQRSTVWY**"
+    aa_seq = 'ACDEFGHIKLMNPQRSTVWY**'
     assert_equal aa_seq, LibSSW.int_array_to_aaseq(arr)
   end
 end
