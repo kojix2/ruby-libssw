@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SSW
   module AASeq
     AAELEMENTS = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G',

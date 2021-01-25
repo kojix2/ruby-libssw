@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SSW
   module DNA
     Elements = %w[A C G T N].freeze

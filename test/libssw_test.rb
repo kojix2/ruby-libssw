@@ -83,7 +83,6 @@ class LibsswTest < Minitest::Test
   def test_ssw_align2
     ref = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     read = [0, 1, 2, 3, 3]
-    n = 5
     mat = [2, -2, -2, -2, 0,
            -2,  2, -2, -2,  0,
            -2, -2,  2, -2,  0,
@@ -108,7 +107,6 @@ class LibsswTest < Minitest::Test
     ref_int  = SSW::DNA.to_int_array(ref_str)
     read_str = 'ACGTT'
     read_int = SSW::DNA.to_int_array(read_str)
-    n = 5
     mat = [2, -2, -2, -2, 0,
            -2,  2, -2, -2,  0,
            -2, -2,  2, -2,  0,
@@ -125,7 +123,6 @@ class LibsswTest < Minitest::Test
     ref_int  = SSW::DNA.to_int_array(ref_str)
     read_str = 'CTCTTAGGCCCGCAGTTTCC'
     read_int = SSW::DNA.to_int_array(read_str)
-    n = 5
     mat = [2, -2, -2, -2, 0,
            -2,  2, -2, -2,  0,
            -2, -2,  2, -2,  0,

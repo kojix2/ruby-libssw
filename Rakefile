@@ -35,8 +35,8 @@ namespace :libssw do
         system 'gcc -Wall -O3 -pipe -fPIC -shared -rdynamic -o libssw.so ssw.c ssw.h'
         FileUtils.mkdir_p('../../vendor')
         FileUtils.move('libssw.so', '../../vendor/libssw.so')
-      # May not work on Windows?
       end
+      # May not work on Windows?
     end
   end
 end
