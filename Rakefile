@@ -19,15 +19,24 @@ task :remove_vendor_directory do
   end
 end
 
-task release: [:remove_vendor_directory]
+Rake::Task[:release].enhance([:remove_vendor_directory])
 
 namespace :libssw do
   desc 'Compile libssw'
   task :compile do
     Dir.chdir('Complete-Striped-Smith-Waterman-Library/src') do
-      system 'gcc -Wall -O3 -pipe -fPIC -shared -rdynamic -o libssw.so ssw.c ssw.h'
-      FileUtils.mkdir_p('../../vendor')
-      FileUtils.move('libssw.so', '../../vendor/libssw.so') # May not work on Windows or Mac?
+      # macOS
+      if RUBY_PLATFORM.match(/darwin/)
+        system 'gcc -Wall -O3 -pipe -fPIC -dynamiclib -rdynamic ssw.c ssw.h'
+        FileUtils.mkdir_p('../../vendor')
+        FileUtils.move('a.out', '../../vendor/libssw.dylib')
+      # Linux
+      else
+        system 'gcc -Wall -O3 -pipe -fPIC -shared -rdynamic -o libssw.so ssw.c ssw.h'
+        FileUtils.mkdir_p('../../vendor')
+        FileUtils.move('libssw.so', '../../vendor/libssw.so')
+      # May not work on Windows?
+      end
     end
   end
 end
