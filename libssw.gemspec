@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.required_ruby_version = '>= 2.5'
 
-  spec.files         = Dir['*.{md,txt}', '{lib,exe}/**/*', 'vendor/libssw.so']
+  spec.files         = Dir['*.{md,txt}', '{lib,exe}/**/*', 'vendor/libssw.so', 'vendor/libssw.dylib']
   spec.bindir        = 'exe'
   spec.executables   = 'rbssw'
   spec.require_paths = ['lib']

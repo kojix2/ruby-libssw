@@ -1,23 +1,25 @@
 name: CI
 
-on: [push,pull_request]
+on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        os:   ['ubuntu', 'macos']
+        ruby: ['2.7', '3.0']
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.0.0
-    - name: Set up libssw
-      run: |
-        sudo apt install libssw-dev
-    - name: Run the default task
-      run: |
+        submodules: true
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - run: |
         gem install bundler
         bundle install
-        bundle exec rake
-      env:
-        LIBSSWDIR: /usr/lib/x86_64-linux-gnu/
+    - run: bundle exec rake libssw:compile
+    - run: bundle exec rake test
+
