@@ -23,13 +23,15 @@ export LIBSSWDIR=/usr/lib/x86_64-linux-gnu/ # libssw.so
 
 ### Installing from source
 
-When installing from source code using the following steps, the shared library `libssw.so` will be packed in the Ruby gem. In this case, the environment variable LIBSSWDIR is not required. (Only tested on Ubuntu)
+When installing from source code using the following steps, the shared library `libssw.so` or `libssw.dylib` will be packed in the Ruby gem. In this case, the environment variable `LIBSSWDIR` is not required. 
 
 ```sh
 git clone --recurse-submodules https://github.com/kojix2/ruby-libssw
 bundle exec rake libssw:compile
 bundle exec rake install
 ```
+
+ruby-libssw does not support Windows.
 
 ## Usage
 
@@ -93,7 +95,6 @@ puts SSW.build_path(read_str1, ref_str, align1)
 # |||||
 # ACGTT
 ```
-
 
 ## Documentation
 
