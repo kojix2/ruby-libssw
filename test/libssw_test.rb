@@ -159,14 +159,14 @@ class LibsswTest < Minitest::Test
   def test_int_array_to_dna
     int = [3, 1, 2, 0, 3, 1, 2, 0, 3, 1, 2, 0, 4, 4, 4, 4, 5]
     seq = 'TCGATCGATCGANNNNN'
-    assert_equal seq, SSW::DNA.read_int_array(int)
-    assert_equal seq.reverse, SSW::DNA.read_int_array(int.reverse)
+    assert_equal seq, SSW::DNA.from_int_array(int)
+    assert_equal seq.reverse, SSW::DNA.from_int_array(int.reverse)
   end
 
-  def test_dna_complement
+  def test_dna_revcomp
     s = 'TCGAtcgaN'
     r = 'NTCGATCGA'
-    assert_equal r, SSW::DNA.complement(s)
+    assert_equal r, SSW::DNA.revcomp(s)
   end
 
   def test_aaseq_to_int_array
@@ -178,6 +178,6 @@ class LibsswTest < Minitest::Test
   def test_int_array_to_aaseq
     arr = [0, 4, 3, 6, 13, 7, 8, 9, 11, 10, 12, 2, 14, 5, 1, 15, 16, 19, 17, 18, 23, 28]
     aa_seq = 'ACDEFGHIKLMNPQRSTVWY**'
-    assert_equal aa_seq, SSW::AASeq.read_int_array(arr)
+    assert_equal aa_seq, SSW::AASeq.from_int_array(arr)
   end
 end

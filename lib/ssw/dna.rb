@@ -36,7 +36,7 @@ module SSW
     end
 
     # @param [Array] int array
-    def read_int_array(arr)
+    def from_int_array(arr)
       raise ArgumentError, 'arr must be an Array' unless arr.is_a? Array
 
       arr.map do |i|
@@ -44,7 +44,7 @@ module SSW
       end.join
     end
 
-    def complement(seq)
+    def revcomp(seq)
       seq.each_char.map do |base|
         DNARC[base]
       end.join.reverse

@@ -48,7 +48,7 @@ module SSW
       end
     end
 
-    def read_int_array(arr)
+    def from_int_array(arr)
       raise ArgumentError, 'arr must be an Array' unless arr.is_a? Array
 
       arr.map do |i|

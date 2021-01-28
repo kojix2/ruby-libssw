@@ -43,7 +43,7 @@ ref_int  = SSW::DNA.to_int_array(ref_str)
 # [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 read_str1 = "ACGTT"
-read_str2 = SSW::DNA.complement(read_str1)
+read_str2 = SSW::DNA.revcomp(read_str1)
 # "AACGT"
 read_int1 = SSW::DNA.to_int_array(read_str1)
 # [0, 1, 2, 3, 3]
