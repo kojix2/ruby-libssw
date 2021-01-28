@@ -7,7 +7,7 @@ module SSW
   # @!attribute read_len
   # @!attribute n
   # @!attribute bias
-  class Profile < FFI::Profile
+  class Profile
     def self.keys
       %i[read mat read_len n bias]
     end
