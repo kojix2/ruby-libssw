@@ -96,9 +96,41 @@ puts SSW.build_path(read_str1, ref_str, align1)
 # ACGTT
 ```
 
-## Documentation
+## APIs
 
-* [API Documentation](https://rubydoc.info/gems/libssw)
+See [API Documentation](https://rubydoc.info/gems/libssw).
+
+```markdown
+* SSW module
+  * SSW.init
+  * SSW.init_destroy
+  * SSW.align
+  * SSW.align_destroy
+  * SSW.mark_mismatch
+  * SSW.create_scoring_matrix
+  * SSW.build_path
+  
+* Profile class
+  * attributes
+    * read mat, read_len, n, bias
+
+* Align class
+  * attributes
+    * score1, score2, ref_begin1, ref_end1, read_begin1, read_end1, ref_end2
+      cigar, cigar_len, cigar_string
+  
+* DNA module
+  * DNA.to_int_array
+  * DNA.from_int_array
+  * revcomp
+
+* AASeq module
+  * AASeq.to_int_array
+  * AASeq.from_int_array
+
+* SSW::BLOSUM62
+* SSW::BLOSUM50
+```
 
 ## Development
 
