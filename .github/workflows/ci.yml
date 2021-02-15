@@ -20,6 +20,6 @@ jobs:
     - run: |
         gem install bundler
         bundle install
-    - run: bundle exec rake libssw:compile
+    - run: bundle exec rake libssw:build
     - run: bundle exec rake test
 

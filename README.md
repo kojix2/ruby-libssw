@@ -27,7 +27,7 @@ When installing from source code using the following steps, the shared library `
 
 ```sh
 git clone --recurse-submodules https://github.com/kojix2/ruby-libssw
-bundle exec rake libssw:compile
+bundle exec rake libssw:build
 bundle exec rake install
 ```
 
@@ -136,7 +136,7 @@ See [API Documentation](https://rubydoc.info/gems/libssw).
 
 ```sh
 git clone --recurse-submodules https://github.com/kojix2/ruby-libssw
-bundle exec rake libssw:compile
+bundle exec rake libssw:build
 bundle exec rake test
 ```
 

@@ -23,7 +23,7 @@ Rake::Task[:release].enhance([:remove_vendor_directory])
 
 namespace :libssw do
   desc 'Compile libssw'
-  task :compile do
+  task :build do
     Dir.chdir('Complete-Striped-Smith-Waterman-Library/src') do
       # macOS
       if RUBY_PLATFORM.match(/darwin/)
