@@ -19,8 +19,6 @@ task :remove_vendor_directory do
   end
 end
 
-Rake::Task[:release].enhance([:remove_vendor_directory])
-
 namespace :libssw do
   desc 'Compile libssw'
   task :build do
