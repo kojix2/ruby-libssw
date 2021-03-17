@@ -163,7 +163,7 @@ module SSW
       elsif align.is_a?(Fiddle::Pointer) || align.respond_to?(:to_ptr)
         FFI.align_destroy(align)
       else
-        raise ArgumentError, 'Expect class of filename to be Pointer'
+        raise ArgumentError, 'Expect class of align to be Pointer'
       end
     end
 
