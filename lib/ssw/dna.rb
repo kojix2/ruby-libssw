@@ -27,7 +27,8 @@ module SSW
     module_function
 
     # Transform DNA sequence into numerical sequence.
-    # @param seq [String] sequence
+    # @param seq [String] dna sequence
+    # @return [Array] int array
     # @example
     #   SSW::DNA.to_int_array("TCGA") #=> [3, 1, 2, 0]
 
@@ -41,6 +42,7 @@ module SSW
 
     # Transform numerical sequence into DNA sequence.
     # @param arr [Array] int array
+    # @retrun [String] dna sequence
     # @example
     #   SSW::DNA.from_int_array([3, 1, 2, 0]) #=> "TCGA"
 
@@ -53,7 +55,8 @@ module SSW
     end
 
     # reverse complement
-    # @param seq [String] sequence 
+    # @param seq [String] sequence
+    # @return [String] reverse complement
     # @example
     #   SSW::DNA.revcomp("TCGAT") #=> "ATCGA"
 

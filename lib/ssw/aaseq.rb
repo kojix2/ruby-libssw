@@ -40,6 +40,12 @@ module SSW
 
     module_function
 
+    # Transform amino acid sequence into numerical sequence.
+    # @param seq [String] amin acid sequence
+    # @return [Array] int array
+    # @example
+    #   SSW::AASeq.to_int_array("ARND") #=> [0, 1, 2, 3]
+
     def to_int_array(seq)
       raise ArgumentError, 'seq must be a string' unless seq.is_a? String
 
@@ -47,6 +53,12 @@ module SSW
         AA2INT[base] || AA2INT['*']
       end
     end
+
+    # Transform numerical sequence into amino acid sequence.
+    # @param arr [Array] int array
+    # @return [String] amino acid sequence
+    # @example
+    #   SSW::AASeq.from_int_array([0, 1, 2, 3]) #=> "ARND"
 
     def from_int_array(arr)
       raise ArgumentError, 'arr must be an Array' unless arr.is_a? Array
