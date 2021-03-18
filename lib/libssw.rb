@@ -133,6 +133,7 @@ module SSW
     #   SSW C library masks the reference loci nearby (mask length = maskLen)
     #   the best alignment ending position and locates the second largest score
     #   from the unmasked elements.
+    # @return [Align]
     def align(prof, ref, weight_gap0, weight_gapE, flag, filters, filterd, mask_len = nil)
       unless prof.is_a?(Fiddle::Pointer) || prof.is_a?(Profile) || prof.respond_to?(:to_ptr)
         raise ArgumentError, 'Expect class of filename to be Profile or Pointer'
@@ -213,6 +214,10 @@ module SSW
     end
 
     # TODO: fix variable names
+    # @param q_seq [String] query sequence
+    # @param r_seq [String] reference sequence
+    # @param align [Align] alignment result
+    # @return [Array]
     def build_path(q_seq, r_seq, align)
       sQ = ''
       sA = ''

@@ -26,7 +26,11 @@ module SSW
 
     module_function
 
-    # @param [String] seq
+    # Transform DNA sequence into numerical sequence.
+    # @param seq [String] sequence
+    # @example
+    #   SSW::DNA.to_int_array("TCGA") #=> [3, 1, 2, 0]
+
     def to_int_array(seq)
       raise ArgumentError, 'seq must be a string' unless seq.is_a? String
 
@@ -35,7 +39,11 @@ module SSW
       end
     end
 
-    # @param [Array] int array
+    # Transform numerical sequence into DNA sequence.
+    # @param arr [Array] int array
+    # @example
+    #   SSW::DNA.from_int_array([3, 1, 2, 0]) #=> "TCGA"
+
     def from_int_array(arr)
       raise ArgumentError, 'arr must be an Array' unless arr.is_a? Array
 
@@ -43,6 +51,11 @@ module SSW
         INT2DNA[i] || 'N'
       end.join
     end
+
+    # reverse complement
+    # @param seq [String] sequence 
+    # @example
+    #   SSW::DNA.revcomp("TCGAT") #=> "ATCGA"
 
     def revcomp(seq)
       seq.each_char.map do |base|
