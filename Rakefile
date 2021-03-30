@@ -38,3 +38,26 @@ namespace :libssw do
     end
   end
 end
+
+# c2ffi: Clang-based FFI wrapper generator
+# https://github.com/rpav/c2ffi
+# Not used in ruby-libssw project
+namespace :c2ffi do
+  desc 'Generate metadata files (JSON format) using c2ffi'
+  task :generate do
+    FileUtils.mkdir_p('codegen/c2ffilogs')
+    header_files = FileList['Complete-Striped-Smith-Waterman-Library/src/*.h']
+    header_files.each do |file|
+      basename = File.basename(file, '.h')
+      system "c2ffi -o codegen/#{basename}.json -M codegen/#{basename}.c #{file}" \
+             " 2> codegen/c2ffilogs/#{basename}.log"
+    end
+  end
+
+  desc 'Remove metadata files'
+  task :remove do
+    FileList['codegen/*.{json,c}', 'codegen/c2ffilogs/*.log'].each do |path|
+      File.unlink(path) if File.exist?(path)
+    end
+  end
+end
