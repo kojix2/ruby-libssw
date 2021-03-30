@@ -49,7 +49,9 @@ namespace :c2ffi do
     header_files = FileList['Complete-Striped-Smith-Waterman-Library/src/*.h']
     header_files.each do |file|
       basename = File.basename(file, '.h')
-      system "c2ffi -o codegen/#{basename}.json -M codegen/#{basename}.c #{file}" \
+      system "c2ffi" \
+             " -o codegen/#{basename}.json" \
+             " -M codegen/#{basename}.c #{file}" \
              " 2> codegen/c2ffilogs/#{basename}.log"
     end
   end
