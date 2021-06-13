@@ -42,7 +42,7 @@ module SSW
 
     # Transform numerical sequence into DNA sequence.
     # @param arr [Array] int array
-    # @retrun [String] dna sequence
+    # @return [String] dna sequence
     # @example
     #   SSW::DNA.from_int_array([3, 1, 2, 0]) #=> "TCGA"
 

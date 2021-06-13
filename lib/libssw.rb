@@ -78,7 +78,7 @@ module SSW
     end
 
     # Release the memory allocated by function ssw_init.
-    # @param p [Fiddle::Pointer, SSW::Profile, SSW::FFI::Profile]
+    # @param profile [Fiddle::Pointer, SSW::Profile, SSW::FFI::Profile]
     #   pointer to the query profile structure
     # @note Ruby has garbage collection, so there is not much reason to call
     #   this method.
@@ -155,7 +155,7 @@ module SSW
     end
 
     # Release the memory allocated by function ssw_align.
-    # @param a [Fiddle::Pointer, SSW::Align, SSW::FFI::Align]
+    # @param align [Fiddle::Pointer, SSW::Align, SSW::FFI::Align]
     #   pointer to the alignment result structure
     def align_destroy(align)
       if align.is_a?(Align)
