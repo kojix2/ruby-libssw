@@ -28,7 +28,7 @@ module SSW
                    File.expand_path("../vendor/#{lib_name}", __dir__)
                  end
 
-  require_relative 'ssw/ffi'
+  require_relative 'ssw/libssw'
   require_relative 'ssw/profile'
   require_relative 'ssw/align'
 
@@ -55,7 +55,7 @@ module SSW
       raise "Not a square matrix. size: #{mat.size}, n: #{n}" if mat.size != n * n
 
       mat_str = mat.flatten.pack('c*')
-      ptr = FFI.ssw_init(
+      ptr = LibSSW.ssw_init(
         read_str,
         read_len,
         mat_str,
@@ -67,7 +67,7 @@ module SSW
       # * The following code will cause a segmentation violation when manually
       #   releasing memory. The reason is unknown.
       # * func_map is only available in newer versions of fiddle.
-      # ptr.free = FFI.instance_variable_get(:@func_map)['init_destroy']
+      # ptr.free = LibSSW.instance_variable_get(:@func_map)['init_destroy']
       ptr.instance_variable_set(:@read_str,   read_str)
       ptr.instance_variable_set(:@read_len,   read_len)
       ptr.instance_variable_set(:@mat_str,    mat_str)
@@ -78,7 +78,7 @@ module SSW
     end
 
     # Release the memory allocated by function ssw_init.
-    # @param profile [Fiddle::Pointer, SSW::Profile, SSW::FFI::Profile]
+    # @param profile [Fiddle::Pointer, SSW::Profile, SSW::LibSSW::Profile]
     #   pointer to the query profile structure
     # @note Ruby has garbage collection, so there is not much reason to call
     #   this method.
@@ -87,11 +87,11 @@ module SSW
         raise ArgumentError, 'Expect class of filename to be Profile or Pointer'
       end
 
-      FFI.init_destroy(profile)
+      LibSSW.init_destroy(profile)
     end
 
     # Do Striped Smith-Waterman alignment.
-    # @param prof [Fiddle::Pointer, SSW::Profile, SSW::FFI::Profile]
+    # @param prof [Fiddle::Pointer, SSW::Profile, SSW::LibSSW::Profile]
     #   pointer to the query profile structure
     # @param ref [Array]
     #   target sequence;
@@ -143,26 +143,26 @@ module SSW
       ref_str = ref.pack('c*')
       ref_len = ref.size
       mask_len ||= [ref_len / 2, 15].max
-      ptr = FFI.ssw_align(
+      ptr = LibSSW.ssw_align(
         prof, ref_str, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
       )
       # Not sure yet if we should set the instance variable to the pointer as a
       # garbage collection workaround.
       # For example: instance_variable_set(:@ref_str, ref_str)
       #
-      # ptr.free = FFI.instance_variable_get(:@func_map)['align_destroy']
+      # ptr.free = LibSSW.instance_variable_get(:@func_map)['align_destroy']
       SSW::Align.new(ptr)
     end
 
     # Release the memory allocated by function ssw_align.
-    # @param align [Fiddle::Pointer, SSW::Align, SSW::FFI::Align]
+    # @param align [Fiddle::Pointer, SSW::Align, SSW::LibSSW::Align]
     #   pointer to the alignment result structure
     def align_destroy(align)
       if align.is_a?(Align)
         warn "You don't need to call this method for Ruby's Align class."
         nil
       elsif align.is_a?(Fiddle::Pointer) || align.respond_to?(:to_ptr)
-        FFI.align_destroy(align)
+        LibSSW.align_destroy(align)
       else
         raise ArgumentError, 'Expect class of align to be Pointer'
       end
@@ -192,7 +192,7 @@ module SSW
     # @return [Integer] The number of mismatches. The cigar and cigarLen are modified.
     def mark_mismatch(ref_begin1, read_begin1, read_end1, ref, read, read_len, cigar, cigar_len)
       warn 'implementation: fiexme: **cigar' # FIXME
-      FFI.mark_mismatch(
+      LibSSW.mark_mismatch(
         ref_begin1, read_begin1, read_end1, ref.pack('c*'), read.pack('c*'), read_len, cigar, cigar_len.pack('l*')
       )
     end

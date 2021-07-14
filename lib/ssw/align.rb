@@ -41,7 +41,7 @@ module SSW
 
     def initialize(ptr)
       @ptr          = ptr
-      @cstruct      = align = FFI::Align.new(ptr)
+      @cstruct      = align = LibSSW::Align.new(ptr)
       @score1       = align.score1
       @score2       = align.score2
       @ref_begin1   = align.ref_begin1

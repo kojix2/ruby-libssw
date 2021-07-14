@@ -8,16 +8,16 @@ class LibsswTest < Minitest::Test
   end
 
   # def test_instance_variable_func_map_available
-  #   refute_nil SSW::FFI.instance_variable_get(:@func_map)
+  #   refute_nil SSW::LibSSW.instance_variable_get(:@func_map)
   # end
 
   def test_align_struct_malloc
-    assert_instance_of SSW::FFI::Align, (ptr = SSW::FFI::Align.malloc)
+    assert_instance_of SSW::LibSSW::Align, (ptr = SSW::LibSSW::Align.malloc)
     assert_instance_of SSW::Align, SSW::Align.new(ptr)
   end
 
   def test_profile_struct_malloc
-    assert_instance_of SSW::FFI::Profile, (ptr = SSW::FFI::Profile.malloc)
+    assert_instance_of SSW::LibSSW::Profile, (ptr = SSW::LibSSW::Profile.malloc)
     assert_instance_of SSW::Profile, SSW::Profile.new(ptr)
   end
 

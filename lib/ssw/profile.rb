@@ -17,7 +17,7 @@ module SSW
 
     def initialize(ptr)
       @ptr      = ptr
-      @cstruct  = profile = SSW::FFI::Profile.new(ptr)
+      @cstruct  = profile = SSW::LibSSW::Profile.new(ptr)
       @read_len = profile.readLen
       @read     = read_len.positive? ? profile.read[0, read_len].unpack('c*') : []
       @n        = profile.n

@@ -4,7 +4,7 @@ require_relative 'test_helper'
 
 class ProfileTest < Minitest::Test
   def setup
-    ptr = SSW::FFI::Profile.malloc
+    ptr = SSW::LibSSW::Profile.malloc
     @profile = SSW::Profile.new(ptr)
   end
 

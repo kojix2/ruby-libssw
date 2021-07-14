@@ -4,7 +4,7 @@ require_relative 'test_helper'
 
 class AlignTest < Minitest::Test
   def setup
-    ptr = SSW::FFI::Align.malloc
+    ptr = SSW::LibSSW::Align.malloc
     @align = SSW::Align.new(ptr)
   end
 

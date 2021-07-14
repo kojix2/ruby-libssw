@@ -3,7 +3,7 @@
 require 'fiddle/import'
 
 module SSW
-  module FFI
+  module LibSSW
     extend Fiddle::Importer
 
     begin
