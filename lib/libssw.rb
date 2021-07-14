@@ -13,14 +13,7 @@ module SSW
     attr_accessor :ffi_lib
   end
 
-  lib_name = case RbConfig::CONFIG['host_os']
-             when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
-               'libssw.dll'   # unconfirmed
-             when /darwin|mac os/
-               'libssw.dylib' # unconfirmed
-             else
-               'libssw.so'
-             end
+  lib_name = "libssw.#{RbConfig::CONFIG['SOEXT']}" # Ruby 2.5 or later
 
   self.ffi_lib = if ENV['LIBSSWDIR'] && !ENV['LIBSSWDIR'].empty?
                    File.expand_path(lib_name, ENV['LIBSSWDIR'])
