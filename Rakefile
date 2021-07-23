@@ -25,12 +25,12 @@ namespace :libssw do
     Dir.chdir('Complete-Striped-Smith-Waterman-Library/src') do
       # macOS
       if RUBY_PLATFORM.match(/darwin/)
-        system 'gcc -Wall -O3 -pipe -fPIC -dynamiclib -rdynamic ssw.c ssw.h'
+        sh 'gcc -Wall -O3 -pipe -fPIC -dynamiclib -rdynamic ssw.c ssw.h'
         FileUtils.mkdir_p('../../vendor')
         FileUtils.move('a.out', '../../vendor/libssw.dylib')
       # Linux
       else
-        system 'gcc -Wall -O3 -pipe -fPIC -shared -rdynamic -o libssw.so ssw.c ssw.h'
+        sh 'gcc -Wall -O3 -pipe -fPIC -shared -rdynamic -o libssw.so ssw.c ssw.h'
         FileUtils.mkdir_p('../../vendor')
         FileUtils.move('libssw.so', '../../vendor/libssw.so')
       end
@@ -49,10 +49,10 @@ namespace :c2ffi do
     header_files = FileList['Complete-Striped-Smith-Waterman-Library/src/*.h']
     header_files.each do |file|
       basename = File.basename(file, '.h')
-      system "c2ffi" \
-             " -o codegen/#{basename}.json" \
-             " -M codegen/#{basename}.c #{file}" \
-             " 2> codegen/c2ffilogs/#{basename}.log"
+      sh 'c2ffi' \
+         " -o codegen/#{basename}.json" \
+         " -M codegen/#{basename}.c #{file}" \
+         " 2> codegen/c2ffilogs/#{basename}.log"
     end
   end
 
