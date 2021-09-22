@@ -21,6 +21,11 @@ module SSW
                    File.expand_path("../vendor/#{lib_name}", __dir__)
                  end
 
+  # NOTE: Why not use pkg-config?
+  # APT package is available.
+  # However, it dose not include a .pc file.
+  # Thus pkg-config will not find the shared library.
+
   require_relative 'ssw/libssw'
   require_relative 'ssw/profile'
   require_relative 'ssw/align'
