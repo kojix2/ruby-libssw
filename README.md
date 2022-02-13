@@ -140,6 +140,10 @@ bundle exec rake libssw:build
 bundle exec rake test
 ```
 
+    Do you need commit rights to my repository?
+    Do you want to get admin rights and take over the project?
+    If so, please feel free to contact me @kojix2.
+
 ## Contributing
 
 * [Report bugs](https://github.com/kojix2/ruby-libssw/issues)
