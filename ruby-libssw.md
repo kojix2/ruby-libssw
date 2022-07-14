@@ -2,7 +2,7 @@
 title: 'ruby-libssw'
 author:
   - 'kojix2'
-date: 24 May 2022
+date: 14 July 2022
 bibliography: ruby-libssw.bib
 header-includes:
   - \usepackage[margin=1in]{geometry}
@@ -20,6 +20,9 @@ Sequence alignment effectively investigates the relationships between DNA, RNA, 
 performs local alignment of base sequences (DNA, RNA) and amino acid sequences (proteins). libssw uses Smith-Waterman's algorithm. The Smith-Waterman algorithm is accurate but takes a long time to calculate. libssw uses SIMD (Single-Instruction Multiple-Data) to perform parallel operations at the processor to increase speed. libssw is often run within an application for genomic analysis. libssw has wrappers for the C ++, Python, Java, and R languages. But until now, there was no wrapper for the Ruby language. So I created Ruby-libssw.
 
 # Benchmark
+
+TODO:
+https://gist.github.com/ktym/7a4799fb055436dc2139308dcab802f0
 
 # Examples
 

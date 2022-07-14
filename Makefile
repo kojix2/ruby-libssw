@@ -7,11 +7,10 @@ SOURCE = $(NAME).md
 BIBTEX = $(NAME).bib
 TARGET = $(NAME).pdf
 
-$(TARGET): $(BIBTEX)
+$(TARGET): $(SOURCE) $(BIBTEX) 
 	$(PANDOC) -o $(TARGET) -C --pdf-engine=$(ENGINE) -V linkcolor=blue $(SOURCE)
 
-all:
-	clean $(TARGET)
+all: clean $(TARGET)
 
 clean:
 	rm -f $(TARGET)
