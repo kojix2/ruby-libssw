@@ -11,7 +11,7 @@ jobs:
         os:   ['ubuntu', 'macos']
         ruby: ['3.2', '3.3', '3.4']
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         submodules: true
     - uses: ruby/setup-ruby@v1
