@@ -26,13 +26,11 @@ module SSW
     end
 
     def to_ptr
-      # Garbage collection warkaround
-      # Preventing Garbage Collection --force
-      cstruct.read    = ptr.instance_variable_get(:@read_str)
-      cstruct.mat     = ptr.instance_variable_get(:@mat_str)
-      cstruct.readLen = ptr.instance_variable_get(:@read_len)
-      cstruct.n       = ptr.instance_variable_get(:@n)
-      ptr
+      # The pointer already contains the correct C structure.
+      # The instance variables on @ptr (@read_str, @mat_str, etc.) are kept
+      # alive to prevent garbage collection of the memory that C is referencing.
+      # We don't need to modify the C structure here.
+      @ptr
     end
 
     def to_h

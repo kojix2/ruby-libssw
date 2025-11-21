@@ -60,15 +60,19 @@ module SSW
         n,
         score_size
       )
-      # Garbage collection workaround
+      # Garbage collection workaround:
+      # The C library stores pointers to read and mat without copying the data.
+      # We must keep the Ruby strings (read_str, mat_str) alive for the lifetime
+      # of the profile structure to prevent segmentation faults.
       #
-      # * The following code will cause a segmentation violation when manually
-      #   releasing memory. The reason is unknown.
-      # * func_map is only available in newer versions of fiddle.
-      # ptr.free = LibSSW.instance_variable_get(:@func_map)['init_destroy']
+      # We cannot use Fiddle's automatic memory management (ptr.free) here because:
+      # - Calling init_destroy from Ruby's GC causes segmentation violations
+      # - The user should explicitly call SSW.init_destroy when done, or let
+      #   Ruby's GC clean up the profile structure itself (though the contained
+      #   profile_byte/profile_word will leak unless init_destroy is called)
       ptr.instance_variable_set(:@read_str,   read_str)
-      ptr.instance_variable_set(:@read_len,   read_len)
       ptr.instance_variable_set(:@mat_str,    mat_str)
+      ptr.instance_variable_set(:@read_len,   read_len)
       ptr.instance_variable_set(:@n,          n)
       ptr.instance_variable_set(:@score_size, score_size)
 
@@ -81,8 +85,8 @@ module SSW
     # @note Ruby has garbage collection, so there is not much reason to call
     #   this method.
     def init_destroy(profile)
-      unless profile.is_a?(Fiddle::Pointer) || prof.is_a?(Profile) || prof.respond_to?(:to_ptr)
-        raise ArgumentError, 'Expect class of filename to be Profile or Pointer'
+      unless profile.is_a?(Fiddle::Pointer) || profile.is_a?(Profile) || profile.respond_to?(:to_ptr)
+        raise ArgumentError, 'Expect class of profile to be Profile or Pointer'
       end
 
       LibSSW.init_destroy(profile)
@@ -144,11 +148,12 @@ module SSW
       ptr = LibSSW.ssw_align(
         prof, ref_str, ref_len, weight_gap0, weight_gapE, flag, filters, filterd, mask_len
       )
-      # Not sure yet if we should set the instance variable to the pointer as a
-      # garbage collection workaround.
-      # For example: instance_variable_set(:@ref_str, ref_str)
-      #
-      # ptr.free = LibSSW.instance_variable_get(:@func_map)['align_destroy']
+      # Garbage collection workaround:
+      # Keep ref_str alive while the C code might still need it.
+      # However, since Align.new immediately reads all values and calls align_destroy,
+      # the C memory is freed immediately, so ref_str only needs to live until then.
+      # We store it on ptr just to be safe during the Align.new call.
+      ptr.instance_variable_set(:@ref_str, ref_str)
       SSW::Align.new(ptr)
     end
 
