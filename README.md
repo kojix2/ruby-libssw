@@ -23,7 +23,7 @@ export LIBSSWDIR=/usr/lib/x86_64-linux-gnu/ # libssw.so
 
 ### Installing from source
 
-When installing from source code using the following steps, the shared library `libssw.so` or `libssw.dylib` will be packed in the Ruby gem. In this case, the environment variable `LIBSSWDIR` is not required. 
+When installing from source code using the following steps, the shared library `libssw.so` or `libssw.dylib` will be packed in the Ruby gem. In this case, the environment variable `LIBSSWDIR` is not required.
 
 ```sh
 git clone --recursive https://github.com/kojix2/ruby-libssw
@@ -39,7 +39,7 @@ ruby-libssw does not support Windows.
 require 'libssw'
 
 ref_str  = "AAAAAAAAACGTTAAAAAAAAAA"
-ref_int  = SSW::DNA.to_int_array(ref_str) 
+ref_int  = SSW::DNA.to_int_array(ref_str)
 # [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 read_str1 = "ACGTT"
@@ -101,35 +101,40 @@ puts SSW.build_path(read_str1, ref_str, align1)
 See [API Documentation](https://rubydoc.info/gems/libssw).
 
 ```markdown
-* SSW module
-  * SSW.init
-  * SSW.init_destroy
-  * SSW.align
-  * SSW.align_destroy
-  * SSW.mark_mismatch
-  * SSW.create_scoring_matrix
-  * SSW.build_path
-  
-  * Profile class
-    * attributes
-      * read, mat, read_len, n, bias
+- SSW module
 
-  * Align class
-    * attributes
-      * score1, score2, ref_begin1, ref_end1, read_begin1, read_end1, ref_end2
+  - SSW.init
+  - SSW.init_destroy
+  - SSW.align
+  - SSW.align_destroy
+  - SSW.mark_mismatch
+  - SSW.create_scoring_matrix
+  - SSW.build_path
+
+  - Profile class
+
+    - attributes
+      - read, mat, read_len, n, bias
+
+  - Align class
+
+    - attributes
+      - score1, score2, ref_begin1, ref_end1, read_begin1, read_end1, ref_end2
         cigar, cigar_len, cigar_string
-  
-  * DNA module
-    * DNA.to_int_array
-    * DNA.from_int_array
-    * revcomp
 
-  * AASeq module
-    * AASeq.to_int_array
-    * AASeq.from_int_array
+  - DNA module
 
-  * BLOSUM62
-  * BLOSUM50
+    - DNA.to_int_array
+    - DNA.from_int_array
+    - revcomp
+
+  - AASeq module
+
+    - AASeq.to_int_array
+    - AASeq.from_int_array
+
+  - BLOSUM62
+  - BLOSUM50
 ```
 
 ## Development
@@ -146,12 +151,12 @@ bundle exec rake test
 
 ## Contributing
 
-* [Report bugs](https://github.com/kojix2/ruby-libssw/issues)
-* Fix bugs and [submit pull requests](https://github.com/kojix2/ruby-libssw/pulls)
-* Write, clarify, or fix documentation
-* English corrections are welcome
-* Suggest or add new features
+- [Report bugs](https://github.com/kojix2/ruby-libssw/issues)
+- Fix bugs and [submit pull requests](https://github.com/kojix2/ruby-libssw/pulls)
+- Write, clarify, or fix documentation
+- English corrections are welcome
+- Suggest or add new features
 
 ## License
 
-* [MIT License](https://opensource.org/licenses/MIT).
+- [MIT License](https://opensource.org/licenses/MIT).
