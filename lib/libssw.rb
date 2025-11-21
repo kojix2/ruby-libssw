@@ -102,25 +102,25 @@ module SSW
     # @param weight_gap0 [Integer] the absolute value of gap open penalty
     # @param weight_gapE [Integer] the absolute value of gap extension penalty
     # @param flag [Integer]
-    #   * bit 5: when setted as 1, function ssw_align will return the best
+    #   * bit 5: when set as 1, function ssw_align will return the best
     #     alignment beginning position;
-    #   * bit 6: when setted as 1, if (ref_end1 - ref_begin1 < filterd &&
-    #     read_end1 - read_begin1 < filterd), (whatever bit 5 is setted) the
+    #   * bit 6: when set as 1, if (ref_end1 - ref_begin1 < filterd &&
+    #     read_end1 - read_begin1 < filterd), (whatever bit 5 is set) the
     #     function will return the best alignment beginning position and cigar;
-    #   * bit 7: when setted as 1, if the best alignment score >= filters,
-    #     (whatever bit 5 is setted) the function   will return the best
+    #   * bit 7: when set as 1, if the best alignment score >= filters,
+    #     (whatever bit 5 is set) the function   will return the best
     #     alignment beginning position and cigar;
-    #   * bit 8: when setted as 1, (whatever bit 5, 6 or 7 is  setted) the
+    #   * bit 8: when set as 1, (whatever bit 5, 6 or 7 is  set) the
     #     function will always return the best alignment beginning position and
     #     cigar. When flag == 0, only the optimal and sub-optimal scores and the
     #     optimal alignment ending position will be returned.
     # @param filters [Integer]
-    #   scorefilter: when bit 7 of flag is setted as 1 and bit 8 is setted as 0,
-    #   filters will be used (Please check the decription of the flag parameter
+    #   scorefilter: when bit 7 of flag is set as 1 and bit 8 is set as 0,
+    #   filters will be used (Please check the description of the flag parameter
     #   for detailed usage.)
     # @param filterd [Integer]
-    #   distance filter: when bit 6 of flag is setted as 1 and bit 8 is setted
-    #   as 0, filterd will be used (Please check the decription of the flag
+    #   distance filter: when bit 6 of flag is set as 1 and bit 8 is set
+    #   as 0, filterd will be used (Please check the description of the flag
     #   parameter for detailed usage.)
     # @param mask_len [Integer]
     #   The distance between the optimal and suboptimal alignment ending

@@ -37,7 +37,7 @@ def stress_test
     # Clean up
     SSW.init_destroy(profile)
 
-    print '.' if i % 10 == 0
+    print '.' if (i % 10).zero?
   end
 
   puts "\n✓ Completed 100 iterations successfully!"
@@ -126,6 +126,6 @@ stress_test
 test_profile_persistence
 test_concurrent_profiles
 
-puts "\n" + '=' * 50
+puts "\n#{'=' * 50}"
 puts 'All memory management tests passed! ✓'
 puts '=' * 50
