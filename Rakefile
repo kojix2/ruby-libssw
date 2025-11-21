@@ -2,6 +2,7 @@
 
 require 'bundler/gem_tasks'
 require 'rake/testtask'
+require 'fileutils'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
@@ -14,7 +15,7 @@ task default: :test
 # Don't add vendor directory to packages for distribution
 task :remove_vendor_directory do
   if Dir.exist?('vendor')
-    warn 'Removing the vender directory...'
+    warn 'Removing the vendor directory...'
     FileUtils.remove_dir('vendor')
   end
 end
