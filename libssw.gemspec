@@ -17,5 +17,5 @@ Gem::Specification.new do |spec|
   spec.files         = Dir['*.{md,txt}', '{lib,exe}/**/*', 'vendor/libssw.so', 'vendor/libssw.dylib']
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'fiddle', '>=1.0.7'
+  spec.add_dependency 'fiddle'
 end
